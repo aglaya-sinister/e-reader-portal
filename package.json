@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "portal": "next dev -p 80",
     "lint": "eslint",
     "texts:books": "node scripts/ingest-works.mjs scripts/manifests/books.json",
     "texts:works": "node scripts/ingest-works.mjs scripts/manifests/works.json",
