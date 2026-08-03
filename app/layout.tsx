@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "e-reader-portal",
   description:
-    "Browse featured books, new releases, tags and reader reviews.",
+    "Browse featured books, new releases and tags, and read them in full.",
 };
 
 export default function RootLayout({

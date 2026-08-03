@@ -1,10 +1,9 @@
 import FeaturedCarousel from "@/components/FeaturedCarousel";
 import NewReleases from "@/components/NewReleases";
-import Reviews from "@/components/Reviews";
 import TagCloud from "@/components/TagCloud";
 import TopBar from "@/components/TopBar";
 import YourLibrary from "@/components/YourLibrary";
-import { featured, newReleases, reviews } from "@/data/books";
+import { featured, newReleases } from "@/data/books";
 import { tags } from "@/data/tags";
 
 export default function Home() {
@@ -24,7 +23,6 @@ export default function Home() {
 
           <div className="space-y-10">
             <NewReleases books={newReleases} />
-            <Reviews reviews={reviews} />
           </div>
 
           <aside className="xl:sticky xl:top-20 xl:self-start">

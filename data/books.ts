@@ -10,16 +10,6 @@ export type Book = {
   rating: number;
 };
 
-export type Review = {
-  id: string;
-  reader: string;
-  initials: string;
-  bookId: string;
-  stars: number;
-  body: string;
-  postedAt: string;
-};
-
 export type Tag = {
   label: string;
   count: number;
@@ -147,46 +137,4 @@ export const bookById = (id: string) => allBooks.find((b) => b.id === id);
 
 // Genre helpers live in data/tags.ts — they span works and stories too.
 
-export const reviews: Review[] = [
-  {
-    id: "r1",
-    reader: "Wren A.",
-    initials: "WA",
-    bookId: "frankenstein",
-    stars: 5,
-    body:
-      "This book is awesome! Went in expecting a monster and got a custody dispute instead. The creature's chapters are the best thing here — nobody warned me he'd be the most articulate person in the story.",
-    postedAt: "3 days ago",
-  },
-  {
-    id: "r2",
-    reader: "Desmond K.",
-    initials: "DK",
-    bookId: "moby-dick",
-    stars: 3,
-    body:
-      "Nah, I don't like it. Forty pages on rope. I understand that the digressions are the point, I just didn't want the point that badly.",
-    postedAt: "1 week ago",
-  },
-  {
-    id: "r3",
-    reader: "Ines M.",
-    initials: "IM",
-    bookId: "dracula",
-    stars: 5,
-    body:
-      "The letters-and-diaries format does something a straight narrator couldn't: you spend the whole middle knowing more than any single character does, and it's unbearable.",
-    postedAt: "2 weeks ago",
-  },
-  {
-    id: "r4",
-    reader: "Tobias R.",
-    initials: "TR",
-    bookId: "dorian-gray",
-    stars: 4,
-    body:
-      "Lord Henry gets all the good lines and none of the consequences, which I think is deliberate and still annoyed me.",
-    postedAt: "3 weeks ago",
-  },
-];
 

@@ -39,10 +39,12 @@ export default function BookCover({
     <div
       className={`${widths[size]} aspect-2/3 shrink-0 overflow-hidden rounded-sm shadow-lg shadow-black/40 ring-1 ring-white/10 ${className}`}
       style={{
+        // Same hues, lower lightness — the covers sit quieter against the
+        // dark cards without changing colour.
         background: `linear-gradient(150deg,
-          hsl(${hue} 42% 32%) 0%,
-          hsl(${hue} 38% 20%) 55%,
-          hsl(${(hue + 24) % 360} 34% 14%) 100%)`,
+          hsl(${hue} 38% 21%) 0%,
+          hsl(${hue} 34% 13%) 55%,
+          hsl(${(hue + 24) % 360} 30% 9%) 100%)`,
       }}
     >
       <div className="relative flex h-full flex-col justify-between p-2">

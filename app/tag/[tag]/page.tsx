@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BookCover from "@/components/BookCover";
-import CardBackdrop from "@/components/CardBackdrop";
-import { backdropFor } from "@/data/artwork";
 import StarRating from "@/components/StarRating";
 import ShelfButtons from "@/components/shelf/ShelfButtons";
 import TagCloud from "@/components/TagCloud";
@@ -75,12 +73,6 @@ export default async function TagPage({
                 key={item.id}
                 className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40"
               >
-                <CardBackdrop
-                  src={backdropFor(item)}
-                  hue={item.hue}
-                 
-                  sizes="520px"
-                />
 
                 <div className="relative flex gap-4 p-4">
                   <BookCover book={item} size="md" />
