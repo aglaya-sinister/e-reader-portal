@@ -6,6 +6,7 @@
  *
  * Writes public/artwork/authors/<authorId>-<n>.jpg
  */
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -141,12 +142,44 @@ const ledger = fs.existsSync(LEDGER)
   : {};
 const alreadyUsed = new Set(Object.values(ledger));
 
-/** Download with a retry, since Commons rate-limits bursts with a 429. */
+/**
+ * Every painting already on disk, by content hash — catalog images included, so
+ * a pool painting can never repeat one a catalog book already uses.
+ *
+ * Hashing the bytes rather than trusting the ledger is the point: the ledger
+ * only records what this script downloaded, and any file it did not write is
+ * invisible to it. That gap is what let the same painting land twice.
+ */
+function existingHashes() {
+  const seen = new Set();
+  const dirs = [path.join(ROOT, "public", "artwork"), OUT];
+  for (const dir of dirs) {
+    if (!fs.existsSync(dir)) continue;
+    for (const f of fs.readdirSync(dir)) {
+      if (!f.endsWith(".jpg")) continue;
+      const full = path.join(dir, f);
+      if (fs.statSync(full).isDirectory()) continue;
+      seen.add(crypto.createHash("sha256").update(fs.readFileSync(full)).digest("hex"));
+    }
+  }
+  return seen;
+}
+
+const hashes = existingHashes();
+
+/**
+ * Download with a retry, since Commons rate-limits bursts with a 429.
+ * Rejects an image whose bytes already exist elsewhere.
+ */
 async function download(url, file) {
   for (let attempt = 0; attempt < 4; attempt++) {
     const res = await fetch(url, { headers: { "User-Agent": UA } });
     if (res.ok) {
-      fs.writeFileSync(file, Buffer.from(await res.arrayBuffer()));
+      const buf = Buffer.from(await res.arrayBuffer());
+      const h = crypto.createHash("sha256").update(buf).digest("hex");
+      if (hashes.has(h)) return false; // already used — try the next candidate
+      hashes.add(h);
+      fs.writeFileSync(file, buf);
       return true;
     }
     if (res.status !== 429) return false;
@@ -199,18 +232,25 @@ for (const [authorId, queries] of Object.entries(SEARCHES)) {
     }
   }
 
+  // Walk the candidate list, moving on whenever one is rejected as a duplicate
+  // so a repeat does not simply leave the slot empty.
   let filled = 0;
-  for (let k = 0; k < missing.length; k++) {
-    const choice = picked[k];
-    if (!choice) break;
-    const name = `${authorId}-${missing[k]}.jpg`;
-    await sleep(1200);
-    if (await download(choice.i.thumburl, path.join(OUT, name))) {
-      ledger[name] = choice.p.title;
-      alreadyUsed.add(choice.p.title);
-      filled++;
-      fs.writeFileSync(LEDGER, JSON.stringify(ledger, null, 1));
+  let next = 0;
+  for (const slot of missing) {
+    let placed = false;
+    while (!placed && next < picked.length) {
+      const choice = picked[next++];
+      const name = `${authorId}-${slot}.jpg`;
+      await sleep(1200);
+      if (await download(choice.i.thumburl, path.join(OUT, name))) {
+        ledger[name] = choice.p.title;
+        alreadyUsed.add(choice.p.title);
+        fs.writeFileSync(LEDGER, JSON.stringify(ledger, null, 1));
+        filled++;
+        placed = true;
+      }
     }
+    if (!placed) break;
   }
 
   report.push(
