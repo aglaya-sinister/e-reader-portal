@@ -1,7 +1,9 @@
 import Link from "next/link";
 import type { AuthorWork } from "@/data/authors";
 import { workId } from "@/data/library";
+import { backdropFor } from "@/data/artwork";
 import BookCover from "../BookCover";
+import CardBackdrop from "../CardBackdrop";
 import ShelfButtons from "../shelf/ShelfButtons";
 
 /** A titled grid of works: cover on the left, description beside it. */
@@ -34,13 +36,25 @@ export default function WorkGrid({
         {items.map((work) => (
           <li
             key={work.title}
-            className="relative flex gap-4 rounded-2xl border border-line bg-panel p-4 transition hover:border-brass/40"
+            className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40"
           >
-            <BookCover
-              book={{ title: work.title, author: authorName, hue: work.hue }}
-              size="md"
+            <CardBackdrop
+              src={backdropFor({
+                id: workId(authorId, work.title),
+                author: authorName,
+                authorId,
+              })}
+              hue={work.hue}
+              dim
+              sizes="520px"
             />
-            <div className="min-w-0 flex-1">
+
+            <div className="relative flex gap-4 p-4">
+              <BookCover
+                book={{ title: work.title, author: authorName, hue: work.hue }}
+                size="md"
+              />
+              <div className="min-w-0 flex-1">
               <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brass/70">
                 Description
               </p>
@@ -61,6 +75,7 @@ export default function WorkGrid({
                   id={workId(authorId, work.title)}
                   className="mt-2.5"
                 />
+                </div>
               </div>
             </div>
           </li>

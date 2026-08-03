@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
+import { backdropFor } from "@/data/artwork";
 import { authorSlug } from "@/data/authors";
 import type { Book } from "@/data/books";
 import BookCover from "./BookCover";
@@ -27,7 +28,12 @@ function Arrow({ dir }: { dir: "left" | "right" }) {
 function FeaturedCard({ book, priority }: { book: Book; priority: boolean }) {
   return (
     <article className="group relative flex w-[min(86vw,640px)] shrink-0 snap-start overflow-hidden rounded-2xl border border-line">
-      <CardBackdrop book={book} priority={priority} />
+      <CardBackdrop
+        src={backdropFor(book)}
+        hue={book.hue}
+        alt={`${book.artwork.painting} by ${book.artwork.artist}`}
+        priority={priority}
+      />
 
       <div className="relative flex w-full gap-5 p-5 sm:gap-6 sm:p-6">
         <div className="flex flex-col gap-3">

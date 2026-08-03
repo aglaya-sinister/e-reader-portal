@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BookCover from "@/components/BookCover";
+import CardBackdrop from "@/components/CardBackdrop";
+import { backdropFor } from "@/data/artwork";
 import StarRating from "@/components/StarRating";
 import ShelfButtons from "@/components/shelf/ShelfButtons";
 import TagCloud from "@/components/TagCloud";
@@ -71,10 +73,18 @@ export default async function TagPage({
             {items.map((item) => (
               <li
                 key={item.id}
-                className="relative flex gap-4 rounded-2xl border border-line bg-panel p-4 transition hover:border-brass/40"
+                className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40"
               >
-                <BookCover book={item} size="md" />
-                <div className="min-w-0 flex-1">
+                <CardBackdrop
+                  src={backdropFor(item)}
+                  hue={item.hue}
+                  dim
+                  sizes="520px"
+                />
+
+                <div className="relative flex gap-4 p-4">
+                  <BookCover book={item} size="md" />
+                  <div className="min-w-0 flex-1">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brass/70">
                     {KIND_LABEL[item.kind]}
                   </p>
@@ -108,6 +118,7 @@ export default async function TagPage({
                       </span>
                     </div>
                     <ShelfButtons id={item.id} className="mt-2.5" />
+                    </div>
                   </div>
                 </div>
               </li>
