@@ -51,6 +51,9 @@ const SEARCHES = {
     "Carl Gustav Carus painting",
     "Irish landscape painting 19th century",
     "symbolist painting 19th century landscape",
+    "Jacob van Ruisdael landscape painting",
+    "Salvator Rosa landscape painting",
+    "Hubert Robert ruins painting",
   ],
   "charlotte-bronte": [
     "Victorian genre painting interior scene",
@@ -59,6 +62,9 @@ const SEARCHES = {
     "Richard Redgrave painting",
     "William Powell Frith painting",
     "Yorkshire landscape painting 19th century",
+    "Benjamin Williams Leader painting",
+    "Myles Birket Foster painting",
+    "George Vicat Cole painting",
   ],
   "joseph-conrad": [
     "Frederic Edwin Church landscape painting",
@@ -84,6 +90,12 @@ const SEARCHES = {
     "Theodore Rousseau painting forest",
     "Charles Francois Daubigny painting",
     "Jean-Leon Gerome painting",
+    "Constant Troyon painting",
+    "Jules Dupre landscape painting",
+    "Narcisse Diaz de la Pena painting",
+    "Eugene Fromentin painting",
+    "Alexandre-Gabriel Decamps painting",
+    "Prosper Marilhat painting",
   ],
 };
 
