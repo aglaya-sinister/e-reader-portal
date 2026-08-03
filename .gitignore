@@ -24,10 +24,10 @@
 .DS_Store
 *.pem
 
-# Ingested public-domain texts (~30 MB of derived data).
-# Regenerate with: npm run texts:books && npm run texts:works && npm run texts:collections
-# See scripts/README.md. The site falls back to placeholder prose without them.
-/content/texts/
+# Ingested public-domain texts are committed, so a deployed build serves real
+# books rather than placeholder prose. Regenerate or update them with:
+#   npm run texts:books && npm run texts:works && npm run texts:collections
+# See scripts/README.md.
 
 # debug
 npm-debug.log*
