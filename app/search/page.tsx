@@ -2,7 +2,7 @@ import Link from "next/link";
 import TopBar from "@/components/TopBar";
 import { searchEntries, type SearchEntry } from "@/data/search";
 
-export const metadata = { title: "Search — E-reader portal" };
+export const metadata = { title: "Search — e-reader-portal" };
 
 const KIND_LABEL: Record<SearchEntry["kind"], string> = {
   author: "Author",

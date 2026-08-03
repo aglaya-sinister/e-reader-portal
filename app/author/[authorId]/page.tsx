@@ -19,7 +19,7 @@ export async function generateMetadata({
   const author = authorById(authorId);
   if (!author) return { title: "Author not found" };
   return {
-    title: `${author.name} — E-reader portal`,
+    title: `${author.name} — e-reader-portal`,
     description: author.bio.slice(0, 155),
   };
 }

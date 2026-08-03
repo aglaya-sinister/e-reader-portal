@@ -18,7 +18,7 @@ export async function generateMetadata({
 }) {
   const { tag } = await params;
   const found = tagBySlug(tag);
-  return { title: found ? `${found.label} — E-reader portal` : "Tag not found" };
+  return { title: found ? `${found.label} — e-reader-portal` : "Tag not found" };
 }
 
 const KIND_LABEL = { book: "In the catalog", work: "Work", story: "Short story" };

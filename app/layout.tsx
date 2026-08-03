@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "E-reader portal",
+  title: "e-reader-portal",
   description:
     "Browse featured books, new releases, tags and reader reviews.",
 };
