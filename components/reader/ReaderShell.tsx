@@ -83,14 +83,6 @@ export default function ReaderShell({
     [chapters],
   );
 
-  // Remember the work was opened, so it can surface under "recently opened".
-  const openedRef = useRef(false);
-  useEffect(() => {
-    if (openedRef.current) return;
-    openedRef.current = true;
-    recordProgress(book.id, 0, 0);
-  }, [book.id, recordProgress]);
-
   const goToChapter = useCallback(
     (index: number) => {
       setCurrent(index);

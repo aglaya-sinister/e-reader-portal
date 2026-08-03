@@ -16,8 +16,6 @@ export type ShelfEntry = {
   percent?: number;
   /** When the status was last changed. */
   updatedAt?: number;
-  /** When the work was last opened in the reader — drives "recent". */
-  openedAt?: number;
 };
 
 export type ShelfState = Record<string, ShelfEntry>;
@@ -103,15 +101,14 @@ export function useShelf() {
     write(next);
   }, []);
 
-  /** Remember where the reader got to. */
+  /** Remember where the reader got to, for the progress bar on the shelf. */
   const recordProgress = useCallback(
     (id: string, chapter: number, percent: number) => {
       const current = getSnapshot();
-      const existing = current[id] ?? {};
-      write({
-        ...current,
-        [id]: { ...existing, chapter, percent, openedAt: Date.now() },
-      });
+      const existing = current[id];
+      // Only track position for works that are actually shelved.
+      if (!existing?.status) return;
+      write({ ...current, [id]: { ...existing, chapter, percent } });
     },
     [],
   );
@@ -127,11 +124,3 @@ export function idsByStatus(shelf: ShelfState, status: ShelfStatus) {
     .map(([id]) => id);
 }
 
-/** Ids opened in the reader, most recent first. */
-export function recentlyOpened(shelf: ShelfState, limit = 6) {
-  return Object.entries(shelf)
-    .filter(([, e]) => e.openedAt)
-    .sort((a, b) => (b[1].openedAt ?? 0) - (a[1].openedAt ?? 0))
-    .slice(0, limit)
-    .map(([id]) => id);
-}

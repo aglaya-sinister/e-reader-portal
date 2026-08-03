@@ -4,7 +4,7 @@ import Link from "next/link";
 import { readableById } from "@/data/library";
 import BookCover from "./BookCover";
 import Panel from "./Panel";
-import { idsByStatus, recentlyOpened, useShelf } from "./shelf/useShelf";
+import { idsByStatus, useShelf } from "./shelf/useShelf";
 
 function Row({ id, percent }: { id: string; percent?: number }) {
   const item = readableById(id);
@@ -47,7 +47,6 @@ export default function YourLibrary() {
   const reading = idsByStatus(shelf, "reading");
   const planned = idsByStatus(shelf, "planned");
   const read = idsByStatus(shelf, "read");
-  const recent = recentlyOpened(shelf, 3).filter((id) => !reading.includes(id));
 
   const empty = reading.length + planned.length + read.length === 0;
 
@@ -82,19 +81,6 @@ export default function YourLibrary() {
               </p>
               <ul className="space-y-4">
                 {reading.slice(0, 4).map((id) => (
-                  <Row key={id} id={id} percent={shelf[id]?.percent} />
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {recent.length > 0 && (
-            <div>
-              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">
-                Recently opened
-              </p>
-              <ul className="space-y-4">
-                {recent.map((id) => (
                   <Row key={id} id={id} percent={shelf[id]?.percent} />
                 ))}
               </ul>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { readableById } from "@/data/library";
 import BookCover from "../BookCover";
 import ShelfButtons from "./ShelfButtons";
-import { idsByStatus, recentlyOpened, useShelf, type ShelfStatus } from "./useShelf";
+import { idsByStatus, useShelf, type ShelfStatus } from "./useShelf";
 
 const GROUPS: { status: ShelfStatus; heading: string; colour: string }[] = [
   { status: "reading", heading: "Reading now", colour: "#3b82f6" },
@@ -64,8 +64,6 @@ export default function LibraryLists() {
 
   const groups = GROUPS.map((g) => ({ ...g, ids: idsByStatus(shelf, g.status) }));
   const total = groups.reduce((n, g) => n + g.ids.length, 0);
-  const shelved = new Set(groups.flatMap((g) => g.ids));
-  const recent = recentlyOpened(shelf, 8).filter((id) => !shelved.has(id));
 
   return (
     <>
@@ -80,7 +78,7 @@ export default function LibraryLists() {
           : `${total} ${total === 1 ? "title" : "titles"} shelved`}
       </p>
 
-      {total === 0 && recent.length === 0 && (
+      {total === 0 && (
         <div className="mt-8 rounded-2xl border border-line bg-ink-soft p-6">
           <p className="leading-relaxed text-cream/75">
             Every book and short story on the site carries three buttons. Use the{" "}
@@ -120,21 +118,6 @@ export default function LibraryLists() {
         ),
       )}
 
-      {recent.length > 0 && (
-        <section className="mt-10">
-          <h2 className="text-xl font-semibold tracking-tight">
-            Recently opened
-          </h2>
-          <p className="mt-1 text-sm text-muted">
-            Books you have read from but not shelved.
-          </p>
-          <ul className="mt-4 grid gap-4 sm:grid-cols-2">
-            {recent.map((id) => (
-              <Card key={id} id={id} percent={shelf[id]?.percent} />
-            ))}
-          </ul>
-        </section>
-      )}
     </>
   );
 }
