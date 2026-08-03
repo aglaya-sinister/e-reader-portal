@@ -218,6 +218,16 @@ function tidySections(chapters, strategy) {
     out.push(cur);
   }
 
+  // A first section a fraction of the size of the rest is a title page or a
+  // cast list, not a chapter. Compared against the median so a genuinely short
+  // opening letter or prologue is kept.
+  while (out.length >= 2) {
+    const rest = out.slice(1).map(bodyLength).sort((a, b) => a - b);
+    const median = rest[Math.floor(rest.length / 2)];
+    if (bodyLength(out[0]) >= median * 0.12) break;
+    out.shift();
+  }
+
   // Caps-derived numbering is positional, so it has to be redone after merges.
   if (strategy === "caps") {
     let n = 0;
@@ -231,6 +241,34 @@ function tidySections(chapters, strategy) {
   }
 
   return out;
+}
+
+const ACT_TITLE =
+  /^(?:(?:First|Second|Third|Fourth|Fifth)\s+Act|Act\s+(?:[IVX]+|\d+|One|Two|Three|Four|Five))$/i;
+
+/**
+ * Plays divide into acts, but an all-caps character name reads exactly like a
+ * heading — so an act gets chopped at the first speaker whose name stands
+ * alone, and the title page becomes sections of its own.
+ *
+ * Where two or more acts are found: drop everything before the first act, and
+ * fold any non-act section back into the act it belongs to.
+ */
+function mergePlayActs(chapters) {
+  const isAct = (c) => ACT_TITLE.test((c.title ?? c.label ?? "").trim());
+  if (chapters.filter(isAct).length < 2) return chapters;
+
+  const acts = [];
+  for (const c of chapters) {
+    if (isAct(c)) {
+      acts.push({ label: `Act ${acts.length + 1}`, paragraphs: [...c.paragraphs] });
+    } else if (acts.length > 0) {
+      // A fragment after an act heading is a continuation of that act.
+      acts[acts.length - 1].paragraphs.push(...c.paragraphs);
+    }
+    // Anything before the first act is front matter, and is dropped.
+  }
+  return acts;
 }
 
 export function splitChapters(text, expect) {
@@ -249,7 +287,7 @@ export function splitChapters(text, expect) {
     );
     const marks = [...base, ...extra].sort((a, b) => a.at - b.at);
     if (marks.length < 2) continue;
-    const chapters = tidySections(build(text, marks), name);
+    const chapters = mergePlayActs(tidySections(build(text, marks), name));
     if (chapters.length < 2) continue;
     const lengths = chapters
       .map((c) => c.paragraphs.join(" ").length)
