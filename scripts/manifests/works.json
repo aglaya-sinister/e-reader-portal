@@ -275,66 +275,6 @@
   "author": "Bram Stoker"
  },
  {
-  "id": "h-g-wells--the-war-of-the-worlds",
-  "title": "The War of the Worlds",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-invisible-man",
-  "title": "The Invisible Man",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-island-of-doctor-moreau",
-  "title": "The Island of Doctor Moreau",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-first-men-in-the-moon",
-  "title": "The First Men in the Moon",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-food-of-the-gods",
-  "title": "The Food of the Gods",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-history-of-mr-polly",
-  "title": "The History of Mr Polly",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-country-of-the-blind",
-  "title": "The Country of the Blind",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-door-in-the-wall",
-  "title": "The Door in the Wall",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-star",
-  "title": "The Star",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-crystal-egg",
-  "title": "The Crystal Egg",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-red-room",
-  "title": "The Red Room",
-  "author": "H. G. Wells"
- },
- {
-  "id": "h-g-wells--the-land-ironclads",
-  "title": "The Land Ironclads",
-  "author": "H. G. Wells"
- },
- {
   "id": "charlotte-bronte--villette",
   "title": "Villette",
   "author": "Charlotte Brontë"
@@ -425,61 +365,6 @@
   "author": "Joseph Conrad"
  },
  {
-  "id": "henry-james--the-portrait-of-a-lady",
-  "title": "The Portrait of a Lady",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-wings-of-the-dove",
-  "title": "The Wings of the Dove",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-ambassadors",
-  "title": "The Ambassadors",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-golden-bowl",
-  "title": "The Golden Bowl",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--washington-square",
-  "title": "Washington Square",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--daisy-miller",
-  "title": "Daisy Miller",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-beast-in-the-jungle",
-  "title": "The Beast in the Jungle",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-aspern-papers",
-  "title": "The Aspern Papers",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-jolly-corner",
-  "title": "The Jolly Corner",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-real-thing",
-  "title": "The Real Thing",
-  "author": "Henry James"
- },
- {
-  "id": "henry-james--the-figure-in-the-carpet",
-  "title": "The Figure in the Carpet",
-  "author": "Henry James"
- },
- {
   "id": "emily-bronte--poems-by-currer-ellis-and-acton-bell",
   "title": "Poems by Currer, Ellis and Acton Bell",
   "author": "Emily Brontë"
@@ -493,5 +378,115 @@
   "id": "emily-bronte--the-belgian-essays",
   "title": "The Belgian Essays",
   "author": "Emily Brontë"
+ },
+ {
+  "id": "alexandre-dumas--the-count-of-monte-cristo",
+  "title": "The Count of Monte Cristo",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-three-musketeers",
+  "title": "The Three Musketeers",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--twenty-years-after",
+  "title": "Twenty Years After",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-vicomte-de-bragelonne",
+  "title": "The Vicomte de Bragelonne",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--ten-years-later",
+  "title": "Ten Years Later",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--louise-de-la-valliere",
+  "title": "Louise de la Vallière",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-man-in-the-iron-mask",
+  "title": "The Man in the Iron Mask",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-black-tulip",
+  "title": "The Black Tulip",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--marguerite-de-valois",
+  "title": "Marguerite de Valois",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-companions-of-jehu",
+  "title": "The Companions of Jehu",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-conspirators",
+  "title": "The Conspirators",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-regents-daughter",
+  "title": "The Regent's Daughter",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-borgias",
+  "title": "The Borgias",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--mary-stuart",
+  "title": "Mary Stuart",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--karl-ludwig-sand",
+  "title": "Karl Ludwig Sand",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--urbain-grandier",
+  "title": "Urbain Grandier",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--ali-pacha",
+  "title": "Ali Pacha",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-marquise-de-brinvilliers",
+  "title": "The Marquise de Brinvilliers",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--joan-of-naples",
+  "title": "Joan of Naples",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-countess-of-saint-geran",
+  "title": "The Countess of Saint-Géran",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--murat",
+  "title": "Murat",
+  "author": "Alexandre Dumas"
+ },
+ {
+  "id": "alexandre-dumas--the-cenci",
+  "title": "The Cenci",
+  "author": "Alexandre Dumas"
  }
 ]

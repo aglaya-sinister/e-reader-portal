@@ -90,16 +90,13 @@ const structures: Record<string, Segment[]> = {
       ],
     },
   ],
-  "time-machine": [
-    { unit: "Chapter", count: 16 },
+  "monte-cristo": [{ unit: "Chapter", count: 117 }],
+  "three-musketeers": [
+    { unit: "Chapter", count: 67 },
     { unit: "Epilogue", count: 1 },
   ],
   "jane-eyre": [{ unit: "Chapter", count: 38 }],
   "heart-of-darkness": [{ unit: "Part", count: 3 }],
-  "turn-of-the-screw": [
-    { unit: "Prologue", count: 1 },
-    { unit: "Chapter", count: 24 },
-  ],
   "wuthering-heights": [{ unit: "Chapter", count: 34 }],
 };
 

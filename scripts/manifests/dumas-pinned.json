@@ -1,0 +1,26 @@
+[
+ {
+  "id": "alexandre-dumas--the-man-in-the-iron-mask",
+  "title": "The Man in the Iron Mask",
+  "author": "Alexandre Dumas",
+  "gutenbergId": 2759
+ },
+ {
+  "id": "alexandre-dumas--the-marquise-de-brinvilliers",
+  "title": "Marquise de Brinvilliers",
+  "author": "Alexandre Dumas",
+  "gutenbergId": 2756
+ },
+ {
+  "id": "alexandre-dumas--the-countess-of-saint-geran",
+  "title": "The Countess of Saint Geran",
+  "author": "Alexandre Dumas",
+  "gutenbergId": 2754
+ },
+ {
+  "id": "alexandre-dumas--the-cenci",
+  "title": "The Cenci",
+  "author": "Alexandre Dumas",
+  "gutenbergId": 2742
+ }
+]

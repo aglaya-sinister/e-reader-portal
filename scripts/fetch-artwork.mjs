@@ -12,10 +12,10 @@ const targets = [
   { id: "moby-dick", q: "Turner Whalers Metropolitan Museum painting" },
   { id: "dracula", q: "Arnold Böcklin Die Toteninsel Isle of the Dead" },
   { id: "jekyll-hyde", q: "John Atkinson Grimshaw Nightfall down the Thames" },
-  { id: "time-machine", q: "John Martin The Last Man painting" },
+  { id: "monte-cristo", q: "Gericault The Raft of the Medusa Louvre" },
   { id: "jane-eyre", q: "John Atkinson Grimshaw Knostrop Hall Early Morning" },
   { id: "heart-of-darkness", q: "Frederic Edwin Church Morning in the Tropics" },
-  { id: "turn-of-the-screw", q: "Corot Ville d'Avray painting" },
+  { id: "three-musketeers", q: "Gerome The Duel After the Masquerade" },
   { id: "wuthering-heights", q: "Peter Graham Wandering Shadows Google Art Project" },
 ];
 

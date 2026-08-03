@@ -11,10 +11,9 @@ const targets = [
   ["oscar-wilde", "Oscar Wilde Napoleon Sarony 1882"],
   ["herman-melville", "Herman Melville Joseph Oriel Eaton portrait"],
   ["bram-stoker", "Bram Stoker portrait photograph"],
-  ["h-g-wells", "H G Wells portrait photograph 1920"],
+  ["alexandre-dumas", "Alexandre Dumas pere portrait Nadar photograph"],
   ["charlotte-bronte", "Charlotte Bronte George Richmond portrait"],
   ["joseph-conrad", "Joseph Conrad portrait photograph"],
-  ["henry-james", "Henry James John Singer Sargent portrait"],
   ["emily-bronte", "Emily Bronte Branwell Bronte portrait"],
 ];
 
