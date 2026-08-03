@@ -43,13 +43,15 @@ export default function CardBackdrop({
     );
   }
 
+  // The scrim is heaviest on the left, where the cover and description sit, and
+  // thins out to the right so the painting is actually visible.
   const sideWash = dim
-    ? "linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.88) 45%, rgba(0,0,0,0.74) 100%)"
-    : "linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.78) 45%, rgba(0,0,0,0.45) 100%)";
+    ? "linear-gradient(90deg, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.6) 45%, rgba(0,0,0,0.3) 100%)"
+    : "linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.2) 100%)";
 
   const bottomFade = dim
-    ? "linear-gradient(0deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.2) 100%)"
-    : "linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.1) 55%, transparent 100%)";
+    ? "linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%)"
+    : "linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.05) 55%, transparent 100%)";
 
   return (
     <>
@@ -59,7 +61,7 @@ export default function CardBackdrop({
         fill
         sizes={sizes}
         className="object-cover object-center"
-        style={{ opacity: dim ? 0.55 : 1 }}
+        style={{ opacity: dim ? 0.85 : 1 }}
         priority={priority}
       />
       <div
