@@ -3,6 +3,7 @@ import ReaderShell from "@/components/reader/ReaderShell";
 import { buildParagraphs, chapterMetaFor } from "@/data/chapters";
 import { readableById, readables } from "@/data/library";
 import { realChapter, realChapterMeta, textSource } from "@/lib/texts";
+import { translationInfo } from "@/lib/translations";
 
 export function generateStaticParams() {
   return readables.map((r) => ({ bookId: r.id }));
@@ -44,6 +45,7 @@ export default async function ReadPage({
       initialParagraphs={initialParagraphs}
       isRealText={real !== null}
       source={textSource(item.id)}
+      translation={translationInfo(item.id)}
     />
   );
 }

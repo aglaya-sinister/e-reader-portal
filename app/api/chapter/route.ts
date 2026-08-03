@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { buildParagraphs } from "@/data/chapters";
 import { readableById } from "@/data/library";
 import { realChapter } from "@/lib/texts";
+import { translatedChapter } from "@/lib/translations";
 
 /**
  * One chapter's prose. The reader fetches this when the reader changes chapter,
@@ -14,6 +15,18 @@ export function GET(request: Request) {
 
   if (!readableById(id) || !Number.isInteger(n) || n < 0) {
     return NextResponse.json({ error: "bad request" }, { status: 400 });
+  }
+
+  // ?v=claude asks for the fresh translation, where one exists.
+  if (searchParams.get("v") === "claude") {
+    const translated = translatedChapter(id, n);
+    if (translated) {
+      return NextResponse.json({
+        paragraphs: translated.paragraphs,
+        real: true,
+        translated: true,
+      });
+    }
   }
 
   const real = realChapter(id, n);

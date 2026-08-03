@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { buildParagraphs, type ChapterMeta } from "@/data/chapters";
 import type { Readable } from "@/data/library";
+import type { TranslationInfo } from "@/lib/translations";
 import ShelfButtons from "../shelf/ShelfButtons";
 import { useShelf } from "../shelf/useShelf";
 import ChapterRail from "./ChapterRail";
@@ -17,12 +18,14 @@ export default function ReaderShell({
   initialParagraphs,
   isRealText,
   source,
+  translation,
 }: {
   item: Readable;
   chapters: ChapterMeta[];
   initialParagraphs: string[];
   isRealText: boolean;
   source: { gutenbergId: number; url: string } | null;
+  translation: TranslationInfo | null;
 }) {
   const [themeKey, chooseTheme] = useReaderTheme();
   const { recordProgress } = useShelf();
@@ -38,6 +41,11 @@ export default function ReaderShell({
   const [paragraphs, setParagraphs] = useState(initialParagraphs);
   const [loading, setLoading] = useState(false);
   const requestRef = useRef(0);
+
+  // Which version is on screen. Starts on the historical translation, which is
+  // what the server rendered.
+  const [useClaude, setUseClaude] = useState(false);
+  const hasTranslation = (translation?.chapters ?? []).includes(chapter.index);
 
   const { wordsBefore, totalWords } = useMemo(() => {
     const total = chapters.reduce((n, c) => n + c.wordCount, 0);
@@ -83,13 +91,9 @@ export default function ReaderShell({
     [chapters],
   );
 
-  const goToChapter = useCallback(
-    (index: number) => {
-      setCurrent(index);
-      setScrollFraction(0);
-      recordProgress(book.id, index, percentAt(index));
-      window.scrollTo({ top: 0, behavior: "auto" });
-
+  /** Fetch one chapter in the chosen version. */
+  const loadChapter = useCallback(
+    (index: number, claude: boolean) => {
       const token = ++requestRef.current;
 
       // Placeholder prose can be regenerated on the spot; real text has to come
@@ -99,8 +103,9 @@ export default function ReaderShell({
         return;
       }
 
+      const version = claude ? "&v=claude" : "";
       setLoading(true);
-      fetch(`/api/chapter?id=${encodeURIComponent(book.id)}&n=${index}`)
+      fetch(`/api/chapter?id=${encodeURIComponent(book.id)}&n=${index}${version}`)
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
         .then((data: { paragraphs: string[] }) => {
           if (token !== requestRef.current) return; // a later chapter won
@@ -113,8 +118,25 @@ export default function ReaderShell({
           setLoading(false);
         });
     },
-    [book.id, isRealText, percentAt, recordProgress],
+    [book.id, isRealText],
   );
+
+  const goToChapter = useCallback(
+    (index: number) => {
+      setCurrent(index);
+      setScrollFraction(0);
+      recordProgress(book.id, index, percentAt(index));
+      window.scrollTo({ top: 0, behavior: "auto" });
+      loadChapter(index, useClaude);
+    },
+    [book.id, loadChapter, percentAt, recordProgress, useClaude],
+  );
+
+  const toggleTranslation = useCallback(() => {
+    const next = !useClaude;
+    setUseClaude(next);
+    loadChapter(current, next);
+  }, [current, loadChapter, useClaude]);
 
   return (
     <div
@@ -160,6 +182,27 @@ export default function ReaderShell({
             {book.author}
           </Link>
         </h1>
+
+        {hasTranslation && (
+          <button
+            type="button"
+            onClick={toggleTranslation}
+            aria-pressed={useClaude}
+            title={
+              useClaude
+                ? `Showing the new translation from the ${translation?.sourceLanguage}. Switch back to the historical English translation.`
+                : `Showing the historical English translation. Switch to a new translation from the ${translation?.sourceLanguage}.`
+            }
+            className="shrink-0 rounded-full border px-3 py-1 text-xs transition focus:outline-none focus-visible:ring-2"
+            style={{
+              borderColor: useClaude ? theme.accent : theme.rule,
+              backgroundColor: useClaude ? theme.accent : "transparent",
+              color: useClaude ? theme.bg : theme.muted,
+            }}
+          >
+            {useClaude ? "New translation" : "Historical"}
+          </button>
+        )}
 
         <ShelfButtons id={book.id} className="mr-1" />
 
@@ -230,7 +273,17 @@ export default function ReaderShell({
             ))}
           </div>
 
-          {source && (
+          {useClaude && hasTranslation && (
+            <p
+              className="mt-10 border-t pt-4 font-serif text-sm italic"
+              style={{ borderColor: theme.rule, color: theme.muted }}
+            >
+              Translated by Claude, from the {translation?.sourceLanguage} of{" "}
+              {translation?.sourceTitle}.
+            </p>
+          )}
+
+          {source && !useClaude && (
             <p className="mt-10 text-xs" style={{ color: theme.muted }}>
               Text from{" "}
               <a
