@@ -1,40 +1,45 @@
 import type { ReactNode } from "react";
 
 /**
- * Clean up Project Gutenberg's plain-text conventions at render time, so the
- * stored text stays faithful to the source and every work benefits at once.
+ * Render Project Gutenberg's plain-text conventions as formatting, at display
+ * time — the stored text stays faithful to the source and every work benefits
+ * without re-ingesting.
  *
- * Brackets carry three different things, and they are not equivalent:
- *   [Illustration: …]  a picture we do not have          -> drop entirely
- *   [12] [A] [*]       footnote markers with no footnote -> drop entirely
- *   [Enter Lord Goring] stage directions, editorial gloss -> keep, unbracket
+ * Two conventions mark the same thing, and editions differ on which they use:
+ *   _like this_   italics (An Ideal Husband, Lady Windermere's Fan)
+ *   [like this]   italics (The Importance of Being Earnest)
+ *
+ * In a play both carry the stage directions, so both must render as emphasis.
+ * Flattening either one to plain text loses the distinction between what a
+ * character says and what they do.
+ *
+ * Brackets that point at something absent are the exception — those are
+ * dropped outright rather than emphasised.
  */
-export function cleanSourceMarkup(text: string): string {
+function dropAbsentMarkers(text: string): string {
   return (
     text
-      // Whole blocks that refer to something absent.
+      // A picture the text file does not contain.
       .replace(/\[\s*(illustration|transcriber(?:'s)? note)[^\]]*\]/gi, "")
-      // Footnote references: a number, a single letter, or a symbol.
+      // Footnote markers with no footnote to reach.
       .replace(/\[\s*(?:\d{1,3}|[A-Za-z]|[*†‡])\s*\]/g, "")
-      // Anything else keeps its words but loses the brackets.
-      .replace(/[[\]]/g, "")
-      // Tidy the spacing the removals leave behind.
+      // Tidy the gaps the removals leave behind.
       .replace(/[ \t]{2,}/g, " ")
       .replace(/\s+([,.;:!?])/g, "$1")
       .trim()
   );
 }
 
-/**
- * Gutenberg marks italics with underscores: _like this_. In a play, where every
- * stage direction is italicised, that leaves the text littered with them — so
- * render the emphasis instead of showing the markup. Unpaired underscores are
- * dropped rather than displayed.
- */
+/** Remove any leftover markup characters from a plain run. */
+const strip = (s: string) => s.replace(/[_[\]]/g, "");
+
 export function withEmphasis(raw: string): ReactNode[] {
-  const text = cleanSourceMarkup(raw);
+  const text = dropAbsentMarkers(raw);
   const out: ReactNode[] = [];
-  const re = /_([^_\n]{1,400})_/g;
+
+  // Either convention, whichever comes first. Some editions nest them —
+  // [_Goes out._] — so the captured run is stripped before rendering.
+  const re = /_([^_\n]{1,400})_|\[([^\]\n]{1,400})\]/g;
 
   let last = 0;
   let key = 0;
@@ -42,12 +47,11 @@ export function withEmphasis(raw: string): ReactNode[] {
 
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) out.push(strip(text.slice(last, m.index)));
-    out.push(<em key={key++}>{m[1]}</em>);
+    const inner = strip(m[1] ?? m[2] ?? "");
+    if (inner) out.push(<em key={key++}>{inner}</em>);
     last = re.lastIndex;
   }
   if (last < text.length) out.push(strip(text.slice(last)));
 
   return out;
 }
-
-const strip = (s: string) => s.replace(/_/g, "");
