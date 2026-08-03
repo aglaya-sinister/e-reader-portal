@@ -11,7 +11,7 @@ import StarRating from "./StarRating";
 function WideCard({ book }: { book: Book }) {
   return (
     <article className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40">
-      <CardBackdrop src={backdropFor(book)} hue={book.hue} dim sizes="640px" />
+      <CardBackdrop src={backdropFor(book)} hue={book.hue} sizes="640px" />
 
       <div className="relative flex gap-4 p-4">
         <BookCover book={book} size="md" />
@@ -58,7 +58,7 @@ function WideCard({ book }: { book: Book }) {
 function CompactCard({ book }: { book: Book }) {
   return (
     <article className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40">
-      <CardBackdrop src={backdropFor(book)} hue={book.hue} dim sizes="320px" />
+      <CardBackdrop src={backdropFor(book)} hue={book.hue} sizes="320px" />
 
       <div className="relative flex flex-col gap-3 p-4">
         <BookCover book={book} size="md" />

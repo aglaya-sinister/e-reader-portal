@@ -20,7 +20,7 @@ export async function generateMetadata({
   if (!author) return { title: "Author not found" };
   return {
     title: `${author.name} — e-reader-portal`,
-    description: author.bio.slice(0, 155),
+    description: author.style.slice(0, 155),
   };
 }
 
@@ -59,8 +59,10 @@ export default async function AuthorPage({
               {author.nationality} · {author.lived}
             </p>
 
-            <p className="mt-5 leading-relaxed text-cream/85">{author.bio}</p>
-            <p className="mt-4 leading-relaxed text-cream/75">{author.style}</p>
+            <p className="mt-5 text-[10px] font-semibold uppercase tracking-[0.18em] text-brass/70">
+              Style
+            </p>
+            <p className="mt-2 leading-relaxed text-cream/85">{author.style}</p>
 
             {inCatalog.length > 0 && (
               <div className="mt-6 rounded-xl border border-line bg-ink-soft p-4">

@@ -4,8 +4,9 @@
  * `works` holds novels and book-length work; `stories` holds short fiction and
  * novellas, which for several of these writers is where the best of them is.
  *
- * Biographies and bibliographies here are real. Covers are generated from `hue`
- * by <BookCover>, the same as everywhere else on the site — no cover scans.
+ * Each author carries a note on how they write rather than a life story, and
+ * the bibliographies are real. Covers are generated from `hue` by <BookCover>,
+ * the same as everywhere else on the site — no cover scans.
  */
 
 export type AuthorWork = {
@@ -34,8 +35,6 @@ export type Author = {
   name: string;
   lived: string;
   nationality: string;
-  /** Two or three sentences of life. */
-  bio: string;
   /** One or two sentences on how they write. */
   style: string;
   portrait: {
@@ -72,8 +71,7 @@ export const authors: Author[] = [
     name: "Robert Louis Stevenson",
     lived: "1850–1894",
     nationality: "Scottish",
-    bio: "Born in Edinburgh to a family of lighthouse engineers, Stevenson trained for the law and then declined to practise it. Chronic lung illness kept him moving — France, California, Switzerland, the Adirondacks — in search of air he could breathe. He settled at last in Samoa, where the islanders called him Tusitala, the teller of tales, and where he died at forty-four.",
-    style: "A deliberate stylist with far more range than the adventure-writer label allows: Scots historical fiction, psychological horror, essays, travel writing, fable, and late South Seas stories that turn a cold eye on the colonists among whom he was living. He argued the art of the novel with Henry James as an equal, and wrote plain sentences that are much harder to imitate than they look.",
+    style: "Short declarative sentences doing a great deal of work, and chapters that end on a turn rather than a summary. He is a master of pace: description is rationed, action is reported cleanly, and the reader is trusted to feel the weight of things without being told. His range is wider than the adventure label suggests — Scots dialect horror, psychological case study, essay, fable and late South Seas realism — but the method is constant: put a decent man in a position where every available choice costs him something, and decline to resolve it comfortably.",
     portrait: {
       src: "/authors/robert-louis-stevenson.jpg",
       credit: "Girolamo Nerli, 1892",
@@ -128,8 +126,7 @@ export const authors: Author[] = [
     name: "Mary Shelley",
     lived: "1797–1851",
     nationality: "English",
-    bio: "Daughter of the philosopher William Godwin and the pioneering feminist Mary Wollstonecraft, who died days after her birth. At eighteen she was on Lake Geneva with Byron and Percy Shelley when a wet summer and a ghost-story contest produced Frankenstein. She was widowed at twenty-four and spent the rest of her life writing, editing her husband's poetry, and raising their son.",
-    style: "Framed narratives that pass the story from one unreliable hand to the next, and a persistent interest in what people owe the things they bring into being.",
+    style: "She builds by nesting: an outer narrator receives a testimony, which contains another testimony inside it, so that judgement keeps being handed on and never quite lands. The prose is Romantic in register, given to weather and mountains and long formal speeches, and the effect is deliberate — her monsters and exiles argue their case in the same educated diction as the men who condemn them. Her recurring structural interest is responsibility: who made this, who abandoned it, and what the reader is supposed to do with the fact that both parties are articulate.",
     portrait: {
       src: "/authors/mary-shelley.jpg",
       credit: "Richard Rothwell, 1840",
@@ -153,8 +150,7 @@ export const authors: Author[] = [
     name: "Oscar Wilde",
     lived: "1854–1900",
     nationality: "Irish",
-    bio: "Dublin-born, Oxford-educated, and famous for his conversation before he was famous for his writing. He dominated the London stage in the 1890s, then lost everything in 1895 when a libel suit he had brought collapsed into his own prosecution and two years' hard labour. He died destitute in a Paris hotel at forty-six.",
-    style: "The epigram as a load-bearing structure. Comedies built so the funniest character is usually the one telling the most dangerous truth.",
+    style: "The epigram is not decoration but structure — his plays advance by inverted commonplaces, each line reversing the one before, until the pattern itself becomes the argument. Dialogue carries almost everything; the wittiest character is usually the least reliable and often the most nearly right. In the prose the surface is the subject: beauty, pose and reputation are treated as real forces with real consequences, and the moral arrives late, quietly, and without the comfort of a lesson.",
     portrait: {
       src: "/authors/oscar-wilde.jpg",
       credit: "Napoleon Sarony, 1882",
@@ -180,8 +176,7 @@ export const authors: Author[] = [
     name: "Herman Melville",
     lived: "1819–1891",
     nationality: "American",
-    bio: "Melville went to sea at twenty, deserted a whaler in the Marquesas, and turned the experience into two popular travel books. Moby-Dick, which followed, sold poorly and effectively ended his career as a novelist. He spent his last nineteen years as a customs inspector on the New York docks, writing poetry almost nobody read.",
-    style: "Encyclopaedic digression welded to high rhetoric — a chapter of plot, then a chapter on rope, and no apology for either.",
+    style: "He writes at several altitudes at once — a chapter of plot, then a chapter of taxonomy, then a passage of Shakespearean pitch — and refuses to apologise for the joins. The digressions are the argument: by the time a whale has been classified, dissected and mythologised, the reader has been taught to see the world as unstable and over-full of meaning. His sentences swell and subordinate, piling clause on clause toward a rhetorical crest, then drop without warning into flat sailor's prose.",
     portrait: {
       src: "/authors/herman-melville.jpg",
       credit: "Joseph Oriel Eaton, 1870",
@@ -207,8 +202,7 @@ export const authors: Author[] = [
     name: "Bram Stoker",
     lived: "1847–1912",
     nationality: "Irish",
-    bio: "Bedridden until he was seven, Stoker grew into an athlete at Trinity College Dublin and then into a civil servant and theatre critic. For twenty-seven years he managed the Lyceum Theatre for the actor Henry Irving, a job that consumed most of his working life. Dracula was written in the margins of it, over seven years of notes.",
-    style: "Documents rather than narration — letters, diaries, telegrams, cuttings — so the reader assembles the horror ahead of the characters.",
+    style: "He assembles rather than narrates: letters, diaries, telegrams, ships' logs and newspaper cuttings, each written by someone who holds only part of the picture. The method produces its own dread — the reader collates the evidence long before the characters compare notes, and the horror sits in that gap. His prose is functional and unshowy by design, which makes the eruptions of the uncanny land harder against it.",
     portrait: {
       src: "/authors/bram-stoker.jpg",
       credit: "W. & D. Downey, photogravure",
@@ -232,8 +226,7 @@ export const authors: Author[] = [
     name: "Charlotte Brontë",
     lived: "1816–1855",
     nationality: "English",
-    bio: "The eldest surviving of the Brontë children, raised in a Haworth parsonage on the edge of the moors after losing her mother and two elder sisters early. She worked as a teacher and governess, both of which she disliked, and published as Currer Bell to be read without condescension. She outlived every one of her siblings and died at thirty-eight, pregnant, nine months into a marriage.",
-    style: "First person that argues with the reader directly, and heroines whose plainness is stated as fact and then made irrelevant.",
+    style: "First person that argues with you directly, breaking off to address the reader as an equal and occasionally as an opponent. Her narrators are watchful, unbeautiful by their own account, and morally stubborn; the drama is interior, and the plot mostly supplies pressure for the interior to work against. The prose is dense with feeling but tightly controlled — long paragraphs of self-examination, then a short sentence that settles the matter.",
     portrait: {
       src: "/authors/charlotte-bronte.jpg",
       credit: "George Richmond, 1850",
@@ -255,8 +248,7 @@ export const authors: Author[] = [
     name: "Joseph Conrad",
     lived: "1857–1924",
     nationality: "Polish-British",
-    bio: "Born Józef Teodor Konrad Korzeniowski in Russian-ruled Ukraine to Polish patriot parents, orphaned by eleven, and at sea by seventeen. He spent twenty years in the French and British merchant marine, commanding a steamer up the Congo in 1890 — a journey that wrecked his health and supplied his most famous book. He did not speak fluent English until his twenties, and wrote in it anyway.",
-    style: "Late, deliberate, and suspicious of plain accounts: a narrator recalling a story he heard from someone who may not have understood it either.",
+    style: "Late, deliberate and suspicious of clear accounts: a narrator recalls a story he heard from someone who may not have understood it either, and disclosure is withheld until its meaning has already shifted. He writes English as a third language and uses it with unusual weight, stacking adjectives to produce atmosphere rather than precision — a fog that is itself the point. Chronology is broken on purpose, so that a moral judgement forms in the reader before the facts justifying it arrive.",
     portrait: {
       src: "/authors/joseph-conrad.jpg",
       credit: "Photographer unknown",
@@ -282,8 +274,7 @@ export const authors: Author[] = [
     name: "Emily Brontë",
     lived: "1818–1848",
     nationality: "English",
-    bio: "The most private of the Brontë siblings, happiest at Haworth and miserable away from it — she lasted three months at school and a few more as a teacher. She wrote poetry in secret for years; Charlotte's discovery of the notebooks led to the sisters' first publication. She caught cold at her brother's funeral, refused a doctor, and died three months later at thirty.",
-    style: "No moralising narrator and no reassurance. A structure of nested tellers that keeps the reader at arm's length from people it would be unwise to get near.",
+    style: "No moralising narrator, no reassurance, and a structure of nested tellers that keeps the reader at arm's length from people it would be unwise to approach. Servants and tenants report events they did not fully witness, and their prejudices are left uncorrected. The result is a book with no authorial voice to appeal to: passion, cruelty and grief are recorded with the same flat attention, and the symmetry of the two generations is left to make the argument on its own.",
     portrait: {
       src: "/authors/emily-bronte.jpg",
       credit: "Branwell Brontë, c. 1833",
@@ -299,8 +290,7 @@ export const authors: Author[] = [
     name: "Alexandre Dumas",
     lived: "1802–1870",
     nationality: "French",
-    bio: "Grandson of a French marquis and an enslaved Afro-Caribbean woman, and son of the general Napoleon came to resent, Dumas was left poor at four when his father died. He talked his way into a clerkship on the strength of his handwriting, then wrote his way out of it. At his peak he was the most widely read novelist in Europe, ran his own theatre and newspaper, built a château he could not afford, and lost the lot twice. France moved him to the Panthéon in 2002, apologising for the delay.",
-    style: "Serial fiction written to a deadline and built for it: short chapters, cliffhangers, and plot carried almost entirely in dialogue. He worked with collaborators — Auguste Maquet chief among them — on plots and research, which detractors used against him and which did nothing to dent the results.",
+    style: "Serial fiction written to a deadline and built for it: short chapters, hard cuts, and a hook at the end of nearly every one. Plot moves almost entirely through dialogue — characters explain, scheme and threaten in speech, and description is kept to whatever the scene needs to stand up. History supplies the furniture and the stakes rather than the subject; the real interest is loyalty under pressure, and how long friendship survives ambition. Prolific and unembarrassed about method, he worked with collaborators on plotting and research, which his detractors used against him and which changed the results not at all.",
     portrait: {
       src: "/authors/alexandre-dumas.jpg",
       credit: "Nadar, c. 1855",

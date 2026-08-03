@@ -20,7 +20,7 @@ function Card({ id, percent }: { id: string; percent?: number }) {
 
   return (
     <li className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40">
-      <CardBackdrop src={backdropFor(item)} hue={item.hue} dim sizes="520px" />
+      <CardBackdrop src={backdropFor(item)} hue={item.hue} sizes="520px" />
 
       <div className="relative flex gap-4 p-4">
         <BookCover book={item} size="md" />

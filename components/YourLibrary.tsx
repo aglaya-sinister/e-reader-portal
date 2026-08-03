@@ -14,7 +14,7 @@ function Row({ id, percent }: { id: string; percent?: number }) {
 
   return (
     <li className="relative overflow-hidden rounded-lg border border-line/60">
-      <CardBackdrop src={backdropFor(item)} hue={item.hue} dim sizes="240px" />
+      <CardBackdrop src={backdropFor(item)} hue={item.hue} sizes="240px" />
 
       <div className="relative flex gap-3 p-2">
         <BookCover book={item} size="sm" />

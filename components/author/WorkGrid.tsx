@@ -45,7 +45,7 @@ export default function WorkGrid({
                 authorId,
               })}
               hue={work.hue}
-              dim
+             
               sizes="520px"
             />
 

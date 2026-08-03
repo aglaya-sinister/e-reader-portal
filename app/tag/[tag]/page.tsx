@@ -78,7 +78,7 @@ export default async function TagPage({
                 <CardBackdrop
                   src={backdropFor(item)}
                   hue={item.hue}
-                  dim
+                 
                   sizes="520px"
                 />
 
