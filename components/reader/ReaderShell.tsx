@@ -55,11 +55,27 @@ export default function ReaderShell({
     return Math.min(100, Math.round((read / totalWords) * 100));
   }, [wordsBefore, totalWords, scrollFraction, chapter.wordCount]);
 
+  // Last percentage written to the shelf, so scrolling does not write on every
+  // pixel — only when the figure actually changes.
+  const lastSavedRef = useRef(-1);
+
   useEffect(() => {
     const onScroll = () => {
       const scrollable =
         document.documentElement.scrollHeight - window.innerHeight;
-      setScrollFraction(scrollable > 0 ? window.scrollY / scrollable : 1);
+      const fraction = scrollable > 0 ? window.scrollY / scrollable : 1;
+      setScrollFraction(fraction);
+
+      // Save where the reader actually is, not where the chapter began. Saving
+      // only on chapter change left a finished book stuck at the percentage of
+      // its last chapter's first line.
+      if (!totalWords) return;
+      const read = wordsBefore + fraction * chapters[current].wordCount;
+      const pct = Math.min(100, Math.round((read / totalWords) * 100));
+      if (Math.abs(pct - lastSavedRef.current) >= 1) {
+        lastSavedRef.current = pct;
+        recordProgress(book.id, current, pct);
+      }
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -68,7 +84,7 @@ export default function ReaderShell({
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [current]);
+  }, [book.id, chapters, current, recordProgress, totalWords, wordsBefore]);
 
   // Percentage at the start of a given chapter, for the saved reading position.
   const percentAt = useCallback(
@@ -87,6 +103,7 @@ export default function ReaderShell({
     (index: number) => {
       setCurrent(index);
       setScrollFraction(0);
+      lastSavedRef.current = percentAt(index);
       recordProgress(book.id, index, percentAt(index));
       window.scrollTo({ top: 0, behavior: "auto" });
 
