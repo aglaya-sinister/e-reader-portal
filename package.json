@@ -13,7 +13,6 @@
     "texts:collections": "node scripts/extract-collection.mjs scripts/manifests/collections.json",
     "texts:manifest": "node scripts/make-works-manifest.mjs scripts/manifests/works.json",
     "texts:verify": "node scripts/verify-texts.mjs",
-    "art:fetch": "node scripts/fetch-artwork.mjs --download",
     "portraits:fetch": "node scripts/fetch-portraits.mjs"
   },
   "dependencies": {

@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { readableById } from "@/data/library";
-import { backdropFor } from "@/data/artwork";
 import BookCover from "../BookCover";
-import CardBackdrop from "../CardBackdrop";
 import ShelfButtons from "./ShelfButtons";
 import { idsByStatus, useShelf, type ShelfStatus } from "./useShelf";
 
@@ -20,7 +18,6 @@ function Card({ id, percent }: { id: string; percent?: number }) {
 
   return (
     <li className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40">
-      <CardBackdrop src={backdropFor(item)} hue={item.hue} sizes="520px" />
 
       <div className="relative flex gap-4 p-4">
         <BookCover book={item} size="md" />

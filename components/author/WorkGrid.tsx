@@ -1,9 +1,7 @@
 import Link from "next/link";
 import type { AuthorWork } from "@/data/authors";
 import { workId } from "@/data/library";
-import { backdropFor } from "@/data/artwork";
 import BookCover from "../BookCover";
-import CardBackdrop from "../CardBackdrop";
 import ShelfButtons from "../shelf/ShelfButtons";
 
 /** A titled grid of works: cover on the left, description beside it. */
@@ -38,16 +36,6 @@ export default function WorkGrid({
             key={work.title}
             className="relative overflow-hidden rounded-2xl border border-line bg-panel transition hover:border-brass/40"
           >
-            <CardBackdrop
-              src={backdropFor({
-                id: workId(authorId, work.title),
-                author: authorName,
-                authorId,
-              })}
-              hue={work.hue}
-             
-              sizes="520px"
-            />
 
             <div className="relative flex gap-4 p-4">
               <BookCover

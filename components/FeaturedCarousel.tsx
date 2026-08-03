@@ -2,11 +2,9 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { backdropFor } from "@/data/artwork";
 import { authorSlug } from "@/data/authors";
 import type { Book } from "@/data/books";
 import BookCover from "./BookCover";
-import CardBackdrop from "./CardBackdrop";
 import ShelfButtons from "./shelf/ShelfButtons";
 import StarRating from "./StarRating";
 
@@ -25,16 +23,9 @@ function Arrow({ dir }: { dir: "left" | "right" }) {
   );
 }
 
-function FeaturedCard({ book, priority }: { book: Book; priority: boolean }) {
+function FeaturedCard({ book }: { book: Book }) {
   return (
-    <article className="group relative flex w-[min(86vw,640px)] shrink-0 snap-start overflow-hidden rounded-2xl border border-line">
-      <CardBackdrop
-        src={backdropFor(book)}
-        hue={book.hue}
-        alt={`${book.artwork.painting} by ${book.artwork.artist}`}
-        priority={priority}
-      />
-
+    <article className="group relative flex w-[min(86vw,640px)] shrink-0 snap-start overflow-hidden rounded-2xl border border-line bg-panel">
       <div className="relative flex w-full gap-5 p-5 sm:gap-6 sm:p-6">
         <div className="flex flex-col gap-3">
           <BookCover book={book} size="lg" />
@@ -83,11 +74,6 @@ function FeaturedCard({ book, priority }: { book: Book; priority: boolean }) {
           </div>
         </div>
       </div>
-
-      {/* credit for the backdrop painting */}
-      <p className="pointer-events-none absolute right-4 bottom-2 max-w-[45%] truncate text-right text-[10px] text-cream/35">
-        {book.artwork.artist}, <i>{book.artwork.painting}</i>
-      </p>
     </article>
   );
 }
@@ -132,8 +118,8 @@ export default function FeaturedCarousel({ books }: { books: Book[] }) {
         ref={railRef}
         className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:px-6"
       >
-        {books.map((book, i) => (
-          <FeaturedCard key={book.id} book={book} priority={i === 0} />
+        {books.map((book) => (
+          <FeaturedCard key={book.id} book={book} />
         ))}
         {/* keeps the last card from butting against the viewport edge */}
         <div className="w-2 shrink-0" aria-hidden />

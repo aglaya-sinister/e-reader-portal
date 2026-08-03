@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { backdropFor } from "@/data/artwork";
 import { readableById } from "@/data/library";
 import BookCover from "./BookCover";
-import CardBackdrop from "./CardBackdrop";
 import Panel from "./Panel";
 import { idsByStatus, useShelf } from "./shelf/useShelf";
 
@@ -13,8 +11,7 @@ function Row({ id, percent }: { id: string; percent?: number }) {
   if (!item) return null;
 
   return (
-    <li className="relative overflow-hidden rounded-lg border border-line/60">
-      <CardBackdrop src={backdropFor(item)} hue={item.hue} sizes="240px" />
+    <li className="relative overflow-hidden rounded-lg border border-line/60 bg-panel">
 
       <div className="relative flex gap-3 p-2">
         <BookCover book={item} size="sm" />

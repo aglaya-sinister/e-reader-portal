@@ -1,19 +1,3 @@
-/**
- * The painting used as a card's backdrop. All chosen to be public domain, and
- * matched to the book's subject or to a painter the author sat alongside.
- *
- * `src` is a path under /public. While it is absent the card falls back to a
- * generated gradient, so the layout works either way.
- */
-export type Artwork = {
-  painting: string;
-  artist: string;
-  year: string;
-  /** Why this painting was picked for this book. */
-  note: string;
-  src?: string;
-};
-
 export type Book = {
   id: string;
   title: string;
@@ -24,7 +8,6 @@ export type Book = {
   /** Base hue (0-360) used to generate the cover art and gradient fallback. */
   hue: number;
   rating: number;
-  artwork: Artwork;
 };
 
 export type Review = {
@@ -51,13 +34,6 @@ export const featured: Book[] = [
     hue: 168,
     rating: 4.5,
     genres: ["Gothic", "Science Fiction", "Tragedy"],
-    artwork: {
-      painting: "An Experiment on a Bird in the Air Pump",
-      artist: "Joseph Wright of Derby",
-      year: "1768",
-      src: "/artwork/frankenstein.jpg",
-      note: "A demonstrator holds a life in his hands while the room watches, half thrilled and half appalled — the novel's exact moral situation, painted fifty years early.",
-    },
     blurb:
       "A student of unnatural philosophy assembles a living man from the parts of the dead, then flees the room the moment it opens its eyes. What follows is less a monster story than a long argument about who owed what to whom — told, in turn, by an explorer, a maker, and the made.",
   },
@@ -69,13 +45,6 @@ export const featured: Book[] = [
     hue: 292,
     rating: 4.2,
     genres: ["Gothic", "Philosophical", "Satire"],
-    artwork: {
-      painting: "Romans during the Decadence",
-      artist: "Thomas Couture",
-      year: "1847",
-      src: "/artwork/dorian-gray.jpg",
-      note: "Beautiful people at the exhausted end of an orgy, watched by statues of better men — pleasure as a career, and the bill arriving.",
-    },
     blurb:
       "A young man wishes his portrait would age in his place, and is granted it. He spends the next two decades testing how much a face can hide, while the canvas upstairs keeps an honest ledger of every appetite he indulges.",
   },
@@ -87,13 +56,6 @@ export const featured: Book[] = [
     hue: 206,
     rating: 4.0,
     genres: ["Adventure", "Epic", "Sea Story"],
-    artwork: {
-      painting: "Whalers (The Whale Ship)",
-      artist: "J. M. W. Turner",
-      year: "c. 1845",
-      src: "/artwork/moby-dick.jpg",
-      note: "Turner painted a whaling series in the years just before the novel, and Melville knew his work — the closest thing to an illustration Moby-Dick has.",
-    },
     blurb:
       "A sailor signs onto a whaler and finds its captain has no interest in oil, only in one particular white whale. Between chases the book stops to explain rope, rank, cetacean anatomy and the colour white — digressions that turn out to be the point.",
   },
@@ -105,13 +67,6 @@ export const featured: Book[] = [
     hue: 8,
     rating: 4.4,
     genres: ["Horror", "Gothic", "Epistolary"],
-    artwork: {
-      painting: "The Nightmare",
-      artist: "Henry Fuseli",
-      year: "1781",
-      src: "/artwork/dracula.jpg",
-      note: "A sleeping woman, a crouching incubus, and a horse's head at the curtain — the novel's central image a hundred years before anyone wrote it down.",
-    },
     blurb:
       "Assembled entirely from letters, diaries, ship's logs and newspaper clippings, the case against the count is built by people who each hold one piece of it. The horror arrives early; the dread comes from watching them slowly compare notes.",
   },
@@ -123,13 +78,6 @@ export const featured: Book[] = [
     hue: 128,
     rating: 4.1,
     genres: ["Gothic", "Mystery", "Novella"],
-    artwork: {
-      painting: "Reflections on the Thames, Westminster",
-      artist: "John Atkinson Grimshaw",
-      year: "1880",
-      src: "/artwork/jekyll-hyde.jpg",
-      note: "Gaslight doubled in black water — a respectable city and its inverted copy, which is the whole trick of the novella.",
-    },
     blurb:
       "A lawyer looks into the ugly young man named in his friend's will and finds a door, a cheque, and a chemistry set. Short, airtight, and structured so the reveal lands as a confession rather than a twist.",
   },
@@ -144,13 +92,6 @@ export const newReleases: Book[] = [
     hue: 214,
     rating: 4.7,
     genres: ["Adventure", "Romance", "Tragedy"],
-    artwork: {
-      painting: "The Raft of the Medusa",
-      artist: "Théodore Géricault",
-      year: "1818–19",
-      src: "/artwork/monte-cristo.jpg",
-      note: "Survivors on open water, painted from interviews with the real ones — the sea as the thing that either finishes you or hands you a second life.",
-    },
     blurb:
       "A young sailor, days from marriage and promotion, is denounced by three men who each want something small from his ruin. Fourteen years later a very rich stranger arrives in Paris and begins, with enormous patience, to give them what they asked for.",
   },
@@ -162,13 +103,6 @@ export const newReleases: Book[] = [
     hue: 24,
     rating: 4.6,
     genres: ["Romance", "Gothic", "Bildungsroman"],
-    artwork: {
-      painting: "The Governess",
-      artist: "Rebecca Solomon",
-      year: "1851",
-      src: "/artwork/jane-eyre.jpg",
-      note: "A governess at work in the corner while the family enjoys itself in the light — paid, present, and not counted as company.",
-    },
     blurb:
       "A governess with no money, no family and no intention of being agreeable takes a post at a house with an attic nobody discusses.",
   },
@@ -180,13 +114,6 @@ export const newReleases: Book[] = [
     hue: 96,
     rating: 3.8,
     genres: ["Adventure", "Modernism"],
-    artwork: {
-      painting: "Morning in the Tropics",
-      artist: "Frederic Edwin Church",
-      year: "1877",
-      src: "/artwork/heart-of-darkness.jpg",
-      note: "A river running back into tropical haze, the far bank dissolving — the journey upstream, painted as pure atmosphere.",
-    },
     blurb:
       "A riverboat captain goes upstream after a celebrated agent and finds the enterprise rotten to its root.",
   },
@@ -198,13 +125,6 @@ export const newReleases: Book[] = [
     hue: 8,
     rating: 4.5,
     genres: ["Adventure", "Historical", "Romance"],
-    artwork: {
-      painting: "The Duel After the Masquerade",
-      artist: "Jean-Léon Gérôme",
-      year: "1857",
-      src: "/artwork/three-musketeers.jpg",
-      note: "Dawn, snow, fancy dress and a man dying of a point of honour — the exact cost of the duelling the novel treats as sport.",
-    },
     blurb:
       "A Gascon boy arrives in Paris on a ridiculous horse, contrives three duels before lunch, and ends the morning with the only friends he will ever need. Behind the swordplay sits a cardinal, a queen's indiscretion, and a woman far more dangerous than any of the men.",
   },
@@ -216,13 +136,6 @@ export const newReleases: Book[] = [
     hue: 340,
     rating: 4.0,
     genres: ["Romance", "Gothic", "Tragedy"],
-    artwork: {
-      painting: "Wandering Shadows",
-      artist: "Peter Graham",
-      year: "1878",
-      src: "/artwork/wuthering-heights.jpg",
-      note: "Cloud shadows dragging across open highland moor — weather as temperament, which is exactly how the moors function in this book.",
-    },
     blurb:
       "Two houses on the moors, three generations, and a grudge that outlives everyone who started it.",
   },
