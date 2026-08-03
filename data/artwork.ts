@@ -1,42 +1,48 @@
-import { authorSlug } from "./authors";
+import pools from "./artwork-pools.json";
+import { authors } from "./authors";
 import { allBooks } from "./books";
+import { workId } from "./library";
 
 /**
- * Every book and story shows a painting behind its card.
+ * Every book and story shows a different painting.
  *
- * The ten catalog books have a painting chosen for that book. Everything else
- * draws from a small pool per author — period- and mood-appropriate rather than
- * book-specific — picked by a hash of the work id so a given work always shows
- * the same painting.
+ * The ten catalog books have one chosen for that book. Every other work takes
+ * the next painting from its author's set, assigned by position rather than by
+ * hashing the id — a hash collides, and two works on the same page then share a
+ * backdrop.
+ *
+ * `artwork-pools.json` lists the paintings that actually exist on disk, so a
+ * work beyond the available set returns null and falls back to the generated
+ * gradient. A visible gap is better than a broken image or a silent duplicate.
  */
-
-const POOL_SIZE = 3;
 
 const ownArtwork = new Map(
   allBooks.filter((b) => b.artwork.src).map((b) => [b.id, b.artwork.src!]),
 );
 
-function hash(str: string) {
-  let h = 2166136261;
-  for (let i = 0; i < str.length; i++) {
-    h ^= str.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return h >>> 0;
+const available = pools as Record<string, number[]>;
+
+/** work id -> painting path, or null where the author's set runs out. */
+const assigned = new Map<string, string | null>();
+
+for (const author of authors) {
+  const set = available[author.id] ?? [];
+  const everything = [...author.works, ...(author.stories ?? [])];
+
+  everything.forEach((work, i) => {
+    const n = set[i];
+    assigned.set(
+      workId(author.id, work.title),
+      n === undefined ? null : `/artwork/authors/${author.id}-${n}.jpg`,
+    );
+  });
 }
 
-export function backdropFor({
-  id,
-  author,
-  authorId,
-}: {
+/** Callers pass whole books or works, so extra fields are accepted and ignored. */
+export function backdropFor(item: {
   id: string;
-  author: string;
+  author?: string;
   authorId?: string;
-}): string {
-  const own = ownArtwork.get(id);
-  if (own) return own;
-
-  const slug = authorId && authorId.length > 0 ? authorId : authorSlug(author);
-  return `/artwork/authors/${slug}-${(hash(id) % POOL_SIZE) + 1}.jpg`;
+}): string | null {
+  return ownArtwork.get(item.id) ?? assigned.get(item.id) ?? null;
 }
