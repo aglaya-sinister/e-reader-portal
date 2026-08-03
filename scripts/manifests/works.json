@@ -1,0 +1,497 @@
+[
+ {
+  "id": "robert-louis-stevenson--treasure-island",
+  "title": "Treasure Island",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--kidnapped",
+  "title": "Kidnapped",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--the-master-of-ballantrae",
+  "title": "The Master of Ballantrae",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--weir-of-hermiston",
+  "title": "Weir of Hermiston",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--a-childs-garden-of-verses",
+  "title": "A Child's Garden of Verses",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--travels-with-a-donkey-in-the-cevennes",
+  "title": "Travels with a Donkey in the Cévennes",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--the-black-arrow",
+  "title": "The Black Arrow",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--the-suicide-club",
+  "title": "The Suicide Club",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--the-rajahs-diamond",
+  "title": "The Rajah's Diamond",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--markheim",
+  "title": "Markheim",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--thrawn-janet",
+  "title": "Thrawn Janet",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--the-body-snatcher",
+  "title": "The Body Snatcher",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--the-bottle-imp",
+  "title": "The Bottle Imp",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--the-beach-of-falesa",
+  "title": "The Beach of Falesá",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "robert-louis-stevenson--olalla",
+  "title": "Olalla",
+  "author": "Robert Louis Stevenson"
+ },
+ {
+  "id": "mary-shelley--the-last-man",
+  "title": "The Last Man",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--valperga",
+  "title": "Valperga",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--mathilda",
+  "title": "Mathilda",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--lodore",
+  "title": "Lodore",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--falkner",
+  "title": "Falkner",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--the-mortal-immortal",
+  "title": "The Mortal Immortal",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--transformation",
+  "title": "Transformation",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--roger-dodsworth-the-reanimated-englishman",
+  "title": "Roger Dodsworth: The Reanimated Englishman",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "mary-shelley--the-mourner",
+  "title": "The Mourner",
+  "author": "Mary Shelley"
+ },
+ {
+  "id": "oscar-wilde--the-importance-of-being-earnest",
+  "title": "The Importance of Being Earnest",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--lady-windermeres-fan",
+  "title": "Lady Windermere's Fan",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--an-ideal-husband",
+  "title": "An Ideal Husband",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--salome",
+  "title": "Salomé",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--de-profundis",
+  "title": "De Profundis",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--the-ballad-of-reading-gaol",
+  "title": "The Ballad of Reading Gaol",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--the-canterville-ghost",
+  "title": "The Canterville Ghost",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--lord-arthur-saviles-crime",
+  "title": "Lord Arthur Savile's Crime",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--the-happy-prince-and-other-tales",
+  "title": "The Happy Prince and Other Tales",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--a-house-of-pomegranates",
+  "title": "A House of Pomegranates",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "oscar-wilde--the-model-millionaire",
+  "title": "The Model Millionaire",
+  "author": "Oscar Wilde"
+ },
+ {
+  "id": "herman-melville--typee",
+  "title": "Typee",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--omoo",
+  "title": "Omoo",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--redburn",
+  "title": "Redburn",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--pierre",
+  "title": "Pierre",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--the-confidence-man",
+  "title": "The Confidence-Man",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--bartleby-the-scrivener",
+  "title": "Bartleby, the Scrivener",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--benito-cereno",
+  "title": "Benito Cereno",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--billy-budd-sailor",
+  "title": "Billy Budd, Sailor",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--the-encantadas",
+  "title": "The Encantadas",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--the-paradise-of-bachelors-and-the-tartarus-of-maids",
+  "title": "The Paradise of Bachelors and the Tartarus of Maids",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "herman-melville--the-lightning-rod-man",
+  "title": "The Lightning-Rod Man",
+  "author": "Herman Melville"
+ },
+ {
+  "id": "bram-stoker--the-jewel-of-seven-stars",
+  "title": "The Jewel of Seven Stars",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--the-lair-of-the-white-worm",
+  "title": "The Lair of the White Worm",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--the-lady-of-the-shroud",
+  "title": "The Lady of the Shroud",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--the-snakes-pass",
+  "title": "The Snake's Pass",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--draculas-guest",
+  "title": "Dracula's Guest",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--the-judges-house",
+  "title": "The Judge's House",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--the-squaw",
+  "title": "The Squaw",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--the-burial-of-the-rats",
+  "title": "The Burial of the Rats",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "bram-stoker--under-the-sunset",
+  "title": "Under the Sunset",
+  "author": "Bram Stoker"
+ },
+ {
+  "id": "h-g-wells--the-war-of-the-worlds",
+  "title": "The War of the Worlds",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-invisible-man",
+  "title": "The Invisible Man",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-island-of-doctor-moreau",
+  "title": "The Island of Doctor Moreau",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-first-men-in-the-moon",
+  "title": "The First Men in the Moon",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-food-of-the-gods",
+  "title": "The Food of the Gods",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-history-of-mr-polly",
+  "title": "The History of Mr Polly",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-country-of-the-blind",
+  "title": "The Country of the Blind",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-door-in-the-wall",
+  "title": "The Door in the Wall",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-star",
+  "title": "The Star",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-crystal-egg",
+  "title": "The Crystal Egg",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-red-room",
+  "title": "The Red Room",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "h-g-wells--the-land-ironclads",
+  "title": "The Land Ironclads",
+  "author": "H. G. Wells"
+ },
+ {
+  "id": "charlotte-bronte--villette",
+  "title": "Villette",
+  "author": "Charlotte Brontë"
+ },
+ {
+  "id": "charlotte-bronte--shirley",
+  "title": "Shirley",
+  "author": "Charlotte Brontë"
+ },
+ {
+  "id": "charlotte-bronte--the-professor",
+  "title": "The Professor",
+  "author": "Charlotte Brontë"
+ },
+ {
+  "id": "charlotte-bronte--poems-by-currer-ellis-and-acton-bell",
+  "title": "Poems by Currer, Ellis and Acton Bell",
+  "author": "Charlotte Brontë"
+ },
+ {
+  "id": "charlotte-bronte--the-green-dwarf",
+  "title": "The Green Dwarf",
+  "author": "Charlotte Brontë"
+ },
+ {
+  "id": "charlotte-bronte--the-spell",
+  "title": "The Spell",
+  "author": "Charlotte Brontë"
+ },
+ {
+  "id": "charlotte-bronte--mina-laury",
+  "title": "Mina Laury",
+  "author": "Charlotte Brontë"
+ },
+ {
+  "id": "joseph-conrad--lord-jim",
+  "title": "Lord Jim",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--nostromo",
+  "title": "Nostromo",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--the-secret-agent",
+  "title": "The Secret Agent",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--under-western-eyes",
+  "title": "Under Western Eyes",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--victory",
+  "title": "Victory",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--the-secret-sharer",
+  "title": "The Secret Sharer",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--youth",
+  "title": "Youth",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--typhoon",
+  "title": "Typhoon",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--an-outpost-of-progress",
+  "title": "An Outpost of Progress",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--amy-foster",
+  "title": "Amy Foster",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "joseph-conrad--the-lagoon",
+  "title": "The Lagoon",
+  "author": "Joseph Conrad"
+ },
+ {
+  "id": "henry-james--the-portrait-of-a-lady",
+  "title": "The Portrait of a Lady",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-wings-of-the-dove",
+  "title": "The Wings of the Dove",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-ambassadors",
+  "title": "The Ambassadors",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-golden-bowl",
+  "title": "The Golden Bowl",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--washington-square",
+  "title": "Washington Square",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--daisy-miller",
+  "title": "Daisy Miller",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-beast-in-the-jungle",
+  "title": "The Beast in the Jungle",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-aspern-papers",
+  "title": "The Aspern Papers",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-jolly-corner",
+  "title": "The Jolly Corner",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-real-thing",
+  "title": "The Real Thing",
+  "author": "Henry James"
+ },
+ {
+  "id": "henry-james--the-figure-in-the-carpet",
+  "title": "The Figure in the Carpet",
+  "author": "Henry James"
+ },
+ {
+  "id": "emily-bronte--poems-by-currer-ellis-and-acton-bell",
+  "title": "Poems by Currer, Ellis and Acton Bell",
+  "author": "Emily Brontë"
+ },
+ {
+  "id": "emily-bronte--the-gondal-poems",
+  "title": "The Gondal Poems",
+  "author": "Emily Brontë"
+ },
+ {
+  "id": "emily-bronte--the-belgian-essays",
+  "title": "The Belgian Essays",
+  "author": "Emily Brontë"
+ }
+]

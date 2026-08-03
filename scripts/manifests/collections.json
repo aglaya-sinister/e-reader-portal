@@ -1,0 +1,274 @@
+[
+ {
+  "id": "robert-louis-stevenson--the-suicide-club",
+  "collection": "New Arabian Nights",
+  "author": "Robert Louis Stevenson",
+  "unit": "Tale",
+  "stories": [
+   "Story of the Young Man with the Cream Tarts",
+   "Story of the Physician and the Saratoga Trunk",
+   "The Adventure of the Hansom Cabs"
+  ]
+ },
+ {
+  "id": "robert-louis-stevenson--the-rajahs-diamond",
+  "collection": "New Arabian Nights",
+  "author": "Robert Louis Stevenson",
+  "unit": "Tale",
+  "stories": [
+   "Story of the Bandbox",
+   "Story of the Young Man in Holy Orders",
+   "Story of the House with the Green Blinds",
+   "The Adventure of Prince Florizel and a Detective"
+  ],
+  "endsBefore": "The Pavilion on the Links"
+ },
+ {
+  "id": "robert-louis-stevenson--markheim",
+  "collection": "The Merry Men and Other Tales and Fables",
+  "author": "Robert Louis Stevenson",
+  "unit": "Text",
+  "stories": [
+   "Markheim"
+  ],
+  "boundaries": [
+   "The Merry Men",
+   "Will o' the Mill",
+   "The Treasure of Franchard"
+  ]
+ },
+ {
+  "id": "robert-louis-stevenson--thrawn-janet",
+  "collection": "The Merry Men and Other Tales and Fables",
+  "author": "Robert Louis Stevenson",
+  "unit": "Text",
+  "stories": [
+   "Thrawn Janet"
+  ]
+ },
+ {
+  "id": "robert-louis-stevenson--olalla",
+  "collection": "The Merry Men and Other Tales and Fables",
+  "author": "Robert Louis Stevenson",
+  "unit": "Text",
+  "stories": [
+   "Olalla"
+  ]
+ },
+ {
+  "id": "robert-louis-stevenson--the-bottle-imp",
+  "collection": "Island Nights' Entertainments",
+  "author": "Robert Louis Stevenson",
+  "unit": "Text",
+  "stories": [
+   "The Bottle Imp"
+  ],
+  "boundaries": [
+   "The Isle of Voices"
+  ]
+ },
+ {
+  "id": "robert-louis-stevenson--the-beach-of-falesa",
+  "collection": "Island Nights' Entertainments",
+  "author": "Robert Louis Stevenson",
+  "unit": "Text",
+  "stories": [
+   "The Beach of Falesá"
+  ]
+ },
+ {
+  "id": "oscar-wilde--the-model-millionaire",
+  "collection": "Lord Arthur Savile's Crime and Other Stories",
+  "author": "Oscar Wilde",
+  "unit": "Text",
+  "stories": [
+   "The Model Millionaire"
+  ],
+  "boundaries": [
+   "The Portrait of Mr. W. H.",
+   "The Sphinx Without a Secret",
+   "The Canterville Ghost"
+  ]
+ },
+ {
+  "id": "herman-melville--benito-cereno",
+  "collection": "The Piazza Tales",
+  "author": "Herman Melville",
+  "unit": "Text",
+  "stories": [
+   "Benito Cereno"
+  ],
+  "boundaries": [
+   "The Piazza",
+   "Bartleby",
+   "The Bell-Tower"
+  ]
+ },
+ {
+  "id": "herman-melville--the-lightning-rod-man",
+  "collection": "The Piazza Tales",
+  "author": "Herman Melville",
+  "unit": "Text",
+  "stories": [
+   "The Lightning-Rod Man"
+  ]
+ },
+ {
+  "id": "herman-melville--the-encantadas",
+  "collection": "The Piazza Tales",
+  "author": "Herman Melville",
+  "unit": "Text",
+  "stories": [
+   "The Encantadas"
+  ]
+ },
+ {
+  "id": "bram-stoker--the-judges-house",
+  "collection": "Dracula's Guest",
+  "author": "Bram Stoker",
+  "unit": "Text",
+  "stories": [
+   "The Judge's House"
+  ],
+  "boundaries": [
+   "Dracula's Guest",
+   "The Secret of the Growing Gold",
+   "The Gipsy Prophecy",
+   "The Coming of Abel Behenna",
+   "The Burial of the Rats",
+   "A Dream of Red Hands",
+   "Crooken Sands"
+  ]
+ },
+ {
+  "id": "bram-stoker--the-squaw",
+  "collection": "Dracula's Guest",
+  "author": "Bram Stoker",
+  "unit": "Text",
+  "stories": [
+   "The Squaw"
+  ]
+ },
+ {
+  "id": "bram-stoker--the-burial-of-the-rats",
+  "collection": "Dracula's Guest",
+  "author": "Bram Stoker",
+  "unit": "Text",
+  "stories": [
+   "The Burial of the Rats"
+  ]
+ },
+ {
+  "id": "bram-stoker--draculas-guest",
+  "collection": "Dracula's Guest",
+  "author": "Bram Stoker",
+  "unit": "Text",
+  "stories": [
+   "Dracula's Guest"
+  ]
+ },
+ {
+  "id": "h-g-wells--the-crystal-egg",
+  "collection": "The Country of the Blind and Other Stories",
+  "author": "H. G. Wells",
+  "unit": "Text",
+  "stories": [
+   "The Crystal Egg"
+  ],
+  "boundaries": [
+   "The Star",
+   "A Story of the Stone Age",
+   "The Man Who Could Work Miracles",
+   "The Door in the Wall",
+   "The Country of the Blind",
+   "The Empire of the Ants"
+  ]
+ },
+ {
+  "id": "h-g-wells--the-land-ironclads",
+  "collection": "The Country of the Blind and Other Stories",
+  "author": "H. G. Wells",
+  "unit": "Text",
+  "stories": [
+   "The Land Ironclads"
+  ]
+ },
+ {
+  "id": "joseph-conrad--an-outpost-of-progress",
+  "collection": "Tales of Unrest",
+  "author": "Joseph Conrad",
+  "unit": "Text",
+  "stories": [
+   "An Outpost of Progress"
+  ],
+  "boundaries": [
+   "Karain: A Memory",
+   "The Idiots",
+   "The Return"
+  ]
+ },
+ {
+  "id": "joseph-conrad--the-lagoon",
+  "collection": "Tales of Unrest",
+  "author": "Joseph Conrad",
+  "unit": "Text",
+  "stories": [
+   "The Lagoon"
+  ]
+ },
+ {
+  "id": "mary-shelley--the-mortal-immortal",
+  "collection": "Tales and Stories",
+  "author": "Mary Wollstonecraft Shelley",
+  "unit": "Text",
+  "stories": [
+   "The Mortal Immortal"
+  ],
+  "boundaries": [
+   "The Dream",
+   "The Invisible Girl",
+   "The Evil Eye",
+   "Ferdinando Eboli",
+   "The Pilgrims"
+  ]
+ },
+ {
+  "id": "mary-shelley--transformation",
+  "collection": "Tales and Stories",
+  "author": "Mary Wollstonecraft Shelley",
+  "unit": "Text",
+  "stories": [
+   "Transformation"
+  ]
+ },
+ {
+  "id": "mary-shelley--the-mourner",
+  "collection": "Tales and Stories",
+  "author": "Mary Wollstonecraft Shelley",
+  "unit": "Text",
+  "stories": [
+   "The Mourner"
+  ]
+ },
+ {
+  "id": "mary-shelley--roger-dodsworth-the-reanimated-englishman",
+  "collection": "Tales and Stories",
+  "author": "Mary Wollstonecraft Shelley",
+  "unit": "Text",
+  "stories": [
+   "Roger Dodsworth: The Reanimated Englishman"
+  ]
+ },
+ {
+  "id": "oscar-wilde--a-house-of-pomegranates",
+  "collection": "A House of Pomegranates",
+  "author": "Oscar Wilde",
+  "unit": "Tale",
+  "stories": [
+   "The Young King",
+   "The Birthday of the Infanta",
+   "The Fisherman and his Soul",
+   "The Star-Child"
+  ]
+ }
+]

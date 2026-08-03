@@ -1,0 +1,12 @@
+[
+  { "id": "frankenstein", "title": "Frankenstein", "author": "Mary Shelley", "gutenbergId": 84, "expect": 28 },
+  { "id": "dorian-gray", "title": "The Picture of Dorian Gray", "author": "Oscar Wilde", "gutenbergId": 174, "expect": 20 },
+  { "id": "moby-dick", "title": "Moby Dick", "author": "Herman Melville", "gutenbergId": 2701, "expect": 136 },
+  { "id": "dracula", "title": "Dracula", "author": "Bram Stoker", "gutenbergId": 345, "expect": 27 },
+  { "id": "jekyll-hyde", "title": "Dr. Jekyll and Mr. Hyde", "author": "Robert Louis Stevenson", "gutenbergId": 43, "expect": 10 },
+  { "id": "time-machine", "title": "The Time Machine", "author": "H. G. Wells", "gutenbergId": 35, "expect": 17 },
+  { "id": "jane-eyre", "title": "Jane Eyre", "author": "Charlotte Bronte", "gutenbergId": 1260, "expect": 38 },
+  { "id": "heart-of-darkness", "title": "Heart of Darkness", "author": "Joseph Conrad", "gutenbergId": 219, "expect": 3 },
+  { "id": "turn-of-the-screw", "title": "The Turn of the Screw", "author": "Henry James", "gutenbergId": 209, "expect": 25 },
+  { "id": "wuthering-heights", "title": "Wuthering Heights", "author": "Emily Bronte", "gutenbergId": 768, "expect": 34 }
+]
