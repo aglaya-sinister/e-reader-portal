@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { authorSlug } from "@/data/authors";
+import ShelfButtons from "./shelf/ShelfButtons";
 import type { Book } from "@/data/books";
 import BookCover from "./BookCover";
 import StarRating from "./StarRating";
@@ -40,6 +41,7 @@ function WideCard({ book }: { book: Book }) {
               {book.genres.join(" · ")}
             </span>
           </div>
+          <ShelfButtons id={book.id} className="mt-3" />
         </div>
       </div>
     </article>
@@ -71,6 +73,7 @@ function CompactCard({ book }: { book: Book }) {
         <div className="mt-1.5">
           <StarRating value={book.rating} />
         </div>
+        <ShelfButtons id={book.id} className="mt-2.5" />
       </div>
     </article>
   );

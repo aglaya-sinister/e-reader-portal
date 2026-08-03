@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { buildParagraphs, type ChapterMeta } from "@/data/chapters";
 import type { Readable } from "@/data/library";
+import ShelfButtons from "../shelf/ShelfButtons";
+import { useShelf } from "../shelf/useShelf";
 import ChapterRail from "./ChapterRail";
 import { withEmphasis } from "./emphasis";
 import { themeOrder, themes } from "./themes";
@@ -23,6 +25,7 @@ export default function ReaderShell({
   source: { gutenbergId: number; url: string } | null;
 }) {
   const [themeKey, chooseTheme] = useReaderTheme();
+  const { recordProgress } = useShelf();
   const [railOpen, setRailOpen] = useState(true);
   const [current, setCurrent] = useState(0);
   const [scrollFraction, setScrollFraction] = useState(0);
@@ -67,10 +70,32 @@ export default function ReaderShell({
     };
   }, [current]);
 
+  // Percentage at the start of a given chapter, for the saved reading position.
+  const percentAt = useCallback(
+    (index: number) => {
+      const total = chapters.reduce((n, c) => n + c.wordCount, 0);
+      if (!total) return 0;
+      const before = chapters
+        .slice(0, index)
+        .reduce((n, c) => n + c.wordCount, 0);
+      return Math.round((before / total) * 100);
+    },
+    [chapters],
+  );
+
+  // Remember the work was opened, so it can surface under "recently opened".
+  const openedRef = useRef(false);
+  useEffect(() => {
+    if (openedRef.current) return;
+    openedRef.current = true;
+    recordProgress(book.id, 0, 0);
+  }, [book.id, recordProgress]);
+
   const goToChapter = useCallback(
     (index: number) => {
       setCurrent(index);
       setScrollFraction(0);
+      recordProgress(book.id, index, percentAt(index));
       window.scrollTo({ top: 0, behavior: "auto" });
 
       const token = ++requestRef.current;
@@ -96,7 +121,7 @@ export default function ReaderShell({
           setLoading(false);
         });
     },
-    [book.id, isRealText],
+    [book.id, isRealText, percentAt, recordProgress],
   );
 
   return (
@@ -143,6 +168,8 @@ export default function ReaderShell({
             {book.author}
           </Link>
         </h1>
+
+        <ShelfButtons id={book.id} className="mr-1" />
 
         <div
           className="flex items-center gap-1.5"

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import BookCover from "@/components/BookCover";
 import StarRating from "@/components/StarRating";
+import ShelfButtons from "@/components/shelf/ShelfButtons";
 import TagCloud from "@/components/TagCloud";
 import TopBar from "@/components/TopBar";
 import { authorSlug } from "@/data/authors";
@@ -106,6 +107,7 @@ export default async function TagPage({
                         {item.genres.join(" · ")}
                       </span>
                     </div>
+                    <ShelfButtons id={item.id} className="mt-2.5" />
                   </div>
                 </div>
               </li>

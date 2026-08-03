@@ -4,7 +4,7 @@ import Reviews from "@/components/Reviews";
 import TagCloud from "@/components/TagCloud";
 import TopBar from "@/components/TopBar";
 import YourLibrary from "@/components/YourLibrary";
-import { featured, newReleases, reviews, shelf } from "@/data/books";
+import { featured, newReleases, reviews } from "@/data/books";
 import { tags } from "@/data/tags";
 
 export default function Home() {
@@ -28,7 +28,7 @@ export default function Home() {
           </div>
 
           <aside className="xl:sticky xl:top-20 xl:self-start">
-            <YourLibrary shelf={shelf} />
+            <YourLibrary />
           </aside>
         </div>
       </main>

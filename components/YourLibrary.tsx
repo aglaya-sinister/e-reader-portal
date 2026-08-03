@@ -1,60 +1,111 @@
+"use client";
+
 import Link from "next/link";
-import { authorSlug } from "@/data/authors";
-import { bookById, type ShelfEntry } from "@/data/books";
+import { readableById } from "@/data/library";
 import BookCover from "./BookCover";
 import Panel from "./Panel";
+import { idsByStatus, recentlyOpened, useShelf } from "./shelf/useShelf";
 
-export default function YourLibrary({ shelf }: { shelf: ShelfEntry[] }) {
+function Row({ id, percent }: { id: string; percent?: number }) {
+  const item = readableById(id);
+  if (!item) return null;
+
+  return (
+    <li className="relative flex gap-3">
+      <BookCover book={item} size="sm" />
+      <div className="min-w-0 flex-1">
+        <h3 className="truncate text-sm font-medium">
+          <Link
+            href={`/read/${item.id}`}
+            className="after:absolute after:inset-0 hover:text-brass"
+          >
+            {item.title}
+          </Link>
+        </h3>
+        <p className="truncate text-xs text-muted">{item.author}</p>
+        {percent != null && (
+          <>
+            <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-line">
+              <div
+                className="h-full rounded-full bg-brass"
+                style={{ width: `${percent}%` }}
+              />
+            </div>
+            <p className="mt-1 text-[11px] text-muted tabular-nums">
+              {percent}% read
+            </p>
+          </>
+        )}
+      </div>
+    </li>
+  );
+}
+
+export default function YourLibrary() {
+  const { shelf } = useShelf();
+
+  const reading = idsByStatus(shelf, "reading");
+  const planned = idsByStatus(shelf, "planned");
+  const read = idsByStatus(shelf, "read");
+  const recent = recentlyOpened(shelf, 3).filter((id) => !reading.includes(id));
+
+  const empty = reading.length + planned.length + read.length === 0;
+
   return (
     <Panel
       title="Your Library"
       action={
-        <button
-          type="button"
-          className="text-xs text-brass/80 transition hover:text-brass"
-        >
-          All →
-        </button>
+        !empty ? (
+          <Link
+            href="/library"
+            className="text-xs text-brass/80 transition hover:text-brass"
+          >
+            All →
+          </Link>
+        ) : undefined
       }
     >
-      <ul className="space-y-4">
-        {shelf.map((entry) => {
-          const book = bookById(entry.bookId);
-          if (!book) return null;
-          return (
-            <li key={entry.bookId} className="relative flex gap-3">
-              <BookCover book={book} size="sm" />
-              <div className="min-w-0 flex-1">
-                <h3 className="truncate text-sm font-medium">
-                  <Link
-                    href={`/read/${book.id}`}
-                    className="after:absolute after:inset-0 hover:text-brass"
-                  >
-                    {book.title}
-                  </Link>
-                </h3>
-                <p className="truncate text-xs text-muted">
-                  <Link
-                    href={`/author/${authorSlug(book.author)}`}
-                    className="relative z-10 underline-offset-2 transition hover:text-brass hover:underline"
-                  >
-                    {book.author}
-                  </Link>
-                </p>
-                <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-line">
-                  <div
-                    className="h-full rounded-full bg-brass"
-                    style={{ width: `${entry.progress}%` }}
-                  />
-                </div>
-                <p className="mt-1 text-[11px] text-muted tabular-nums">
-                  {entry.progress}% read
-                </p>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      {empty ? (
+        <p className="text-sm leading-relaxed text-muted">
+          Nothing here yet. Use the{" "}
+          <span style={{ color: "#3b82f6" }}>clock</span>,{" "}
+          <span style={{ color: "#3fa96a" }}>tick</span> and{" "}
+          <span style={{ color: "#e08421" }}>bookmark</span> buttons on any book
+          to start a shelf.
+        </p>
+      ) : (
+        <div className="space-y-4">
+          {reading.length > 0 && (
+            <div>
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">
+                Reading now
+              </p>
+              <ul className="space-y-4">
+                {reading.slice(0, 4).map((id) => (
+                  <Row key={id} id={id} percent={shelf[id]?.percent} />
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {recent.length > 0 && (
+            <div>
+              <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted">
+                Recently opened
+              </p>
+              <ul className="space-y-4">
+                {recent.map((id) => (
+                  <Row key={id} id={id} percent={shelf[id]?.percent} />
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <p className="border-t border-line pt-3 text-xs text-muted">
+            {read.length} read · {planned.length} planned
+          </p>
+        </div>
+      )}
     </Panel>
   );
 }

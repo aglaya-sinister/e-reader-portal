@@ -6,6 +6,7 @@ import { authorSlug } from "@/data/authors";
 import type { Book } from "@/data/books";
 import BookCover from "./BookCover";
 import CardBackdrop from "./CardBackdrop";
+import ShelfButtons from "./shelf/ShelfButtons";
 import StarRating from "./StarRating";
 
 function Arrow({ dir }: { dir: "left" | "right" }) {
@@ -32,6 +33,7 @@ function FeaturedCard({ book, priority }: { book: Book; priority: boolean }) {
         <div className="flex flex-col gap-3">
           <BookCover book={book} size="lg" />
           <StarRating value={book.rating} showValue />
+          <ShelfButtons id={book.id} />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col">

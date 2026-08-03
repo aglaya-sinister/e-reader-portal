@@ -42,12 +42,6 @@ export type Tag = {
   count: number;
 };
 
-export type ShelfEntry = {
-  bookId: string;
-  /** 0-100 */
-  progress: number;
-};
-
 export const featured: Book[] = [
   {
     id: "frankenstein",
@@ -283,8 +277,3 @@ export const reviews: Review[] = [
   },
 ];
 
-export const shelf: ShelfEntry[] = [
-  { bookId: "jane-eyre", progress: 72 },
-  { bookId: "time-machine", progress: 38 },
-  { bookId: "jekyll-hyde", progress: 91 },
-];

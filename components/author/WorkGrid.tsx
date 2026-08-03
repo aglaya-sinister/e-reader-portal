@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { AuthorWork } from "@/data/authors";
 import { workId } from "@/data/library";
 import BookCover from "../BookCover";
+import ShelfButtons from "../shelf/ShelfButtons";
 
 /** A titled grid of works: cover on the left, description beside it. */
 export default function WorkGrid({
@@ -56,6 +57,10 @@ export default function WorkGrid({
                   </Link>
                 </h3>
                 <p className="text-xs text-muted">{work.year}</p>
+                <ShelfButtons
+                  id={workId(authorId, work.title)}
+                  className="mt-2.5"
+                />
               </div>
             </div>
           </li>
