@@ -45,8 +45,10 @@ function* objects(block) {
 }
 
 const out = [];
-// Split the file into author blocks.
-const blocks = src.split(/\n  \{\n    id: "/).slice(1);
+// Split the file into author blocks. The newline is matched as \r?\n: a Windows
+// checkout with core.autocrlf=true hands this file over with CRLF endings, and
+// an \n-only pattern then finds no authors at all and writes an empty manifest.
+const blocks = src.split(/\r?\n {2}\{\r?\n {4}id: "/).slice(1);
 for (const block of blocks) {
   const authorId = block.slice(0, block.indexOf('"'));
   const name = block.match(/name: "([^"]+)"/)?.[1];
