@@ -12,6 +12,7 @@ import { withEmphasis } from "./emphasis";
 import { themeOrder, themes } from "./themes";
 import { usePreferredLang } from "./useReaderLang";
 import { useReaderTheme } from "./useReaderTheme";
+import { useToolbarOpen } from "./useToolbarOpen";
 
 type Source = {
   gutenbergId: number;
@@ -39,7 +40,7 @@ export default function ReaderShell({
   const [preferredLang, setPreferredLang] = usePreferredLang();
   const { recordProgress } = useShelf();
   const [railOpen, setRailOpen] = useState(true);
-  const [barOpen, setBarOpen] = useState(true);
+  const [barOpen, setBarOpen] = useToolbarOpen();
   const [current, setCurrent] = useState(0);
   const [scrollFraction, setScrollFraction] = useState(0);
 
@@ -377,8 +378,10 @@ export default function ReaderShell({
           aria-label="Hide toolbar"
           aria-expanded={true}
           title="Hide toolbar"
-          className="grid h-7 w-7 shrink-0 place-items-center rounded-md text-xs opacity-70 transition hover:opacity-100 focus:outline-none focus-visible:ring-2"
-          style={{ color: theme.muted }}
+          // Framed like the other controls in the bar. Unframed and dimmed it
+          // read as decoration and went unnoticed at the far right edge.
+          className="grid h-7 w-7 shrink-0 place-items-center rounded-md border text-xs transition hover:opacity-100 focus:outline-none focus-visible:ring-2"
+          style={{ borderColor: theme.rule, color: theme.muted }}
         >
           ⌃
         </button>
