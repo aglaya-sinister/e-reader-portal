@@ -1,8 +1,8 @@
 # Text pipeline
 
 The reader serves real public-domain texts from Project Gutenberg. Those texts
-live in `content/texts/` (one JSON file per work) and are **not committed** —
-they are ~30 MB of derived data. These scripts regenerate them.
+live in `content/texts/` (one JSON file per work) and **are committed**, so a
+deployed build serves real books. These scripts regenerate them.
 
 Anything without an ingested text falls back to clearly-marked placeholder
 prose, so the site works with `content/texts/` empty.
@@ -13,11 +13,37 @@ prose, so the site works with `content/texts/` empty.
 npm run texts:books        # the 10 catalog books
 npm run texts:works        # author works, searched by title + author
 npm run texts:collections  # short stories extracted from their parent volumes
+npm run texts:fr           # the French Dumas originals
 npm run texts:verify       # confirm each file is the work it claims to be
 ```
 
-Run them in that order. All three fetch scripts are throttled and safe to
+Run them in that order. All the fetch scripts are throttled and safe to
 re-run; each rewrites only the works in its manifest.
+
+## Languages
+
+English is the base text, `content/texts/<id>.json`. Any other language is a
+sibling file, `<id>.<lang>.json`, and the reader shows a switcher beside the
+title for works that have one. `lib/languages.ts` lists the codes.
+
+`ingest-translations.mjs` fetches them. Unlike the English scripts it **pins**
+Gutenberg IDs instead of searching — a title search in another language matches
+far too loosely. Where a work was only ever published in volumes, list them all
+in `gutenbergIds` and they are joined into one book with chapters renumbered
+from one.
+
+It also turns on two splitting behaviours the English texts do not use, so
+their existing output cannot shift:
+
+- **numbered titles** — French editions often print no "CHAPITRE" at all, just
+  `I. Le fantôme de Richelieu`. Enabling that pattern for English would match a
+  wrapped line beginning "I."
+- **titles ending in a full stop** — `Marseille.--L'arrivée.` is a heading, not
+  prose.
+
+Both are described in `split.mjs`. Downloads are checked for function words in
+the target language first, so a mistyped ID cannot file the English edition
+under a French name.
 
 ## Why there are three fetch scripts
 

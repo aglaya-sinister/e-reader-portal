@@ -11,6 +11,7 @@
     "texts:books": "node scripts/ingest-works.mjs scripts/manifests/books.json",
     "texts:works": "node scripts/ingest-works.mjs scripts/manifests/works.json",
     "texts:collections": "node scripts/extract-collection.mjs scripts/manifests/collections.json",
+    "texts:fr": "node scripts/ingest-translations.mjs scripts/manifests/dumas-fr.json",
     "texts:manifest": "node scripts/make-works-manifest.mjs scripts/manifests/works.json",
     "texts:verify": "node scripts/verify-texts.mjs",
     "portraits:fetch": "node scripts/fetch-portraits.mjs"

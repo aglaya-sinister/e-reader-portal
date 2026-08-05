@@ -29,7 +29,16 @@ function romanToInt(r) {
   return n;
 }
 
-const toNumber = (s) => (ROMAN_RE.test(s) ? romanToInt(s) : parseInt(s, 10));
+// French numbers its opening chapter in words — "CHAPITRE PREMIER" — and then
+// reverts to numerals, so without this the first chapter of every French volume
+// is lost into the front matter.
+const WORD_NUMERALS = { premier: 1, première: 1, i: 1 };
+
+const toNumber = (s) => {
+  const word = WORD_NUMERALS[fold(s)];
+  if (word && !ROMAN_RE.test(s)) return word;
+  return ROMAN_RE.test(s) ? romanToInt(s) : parseInt(s, 10);
+};
 
 function titleCase(s) {
   const small = /^(a|an|and|as|at|but|by|for|in|nor|of|on|or|the|to|up|with)$/i;
@@ -50,13 +59,15 @@ function titleCase(s) {
  * the word "part" into a chapter heading.
  */
 const UNITS =
-  "CHAPTER|Chapter|LETTER|Letter|PART|Part|EPILOGUE|Epilogue|PROLOGUE|Prologue|CONCLUSION|Conclusion";
+  "CHAPTER|Chapter|LETTER|Letter|PART|Part|EPILOGUE|Epilogue|PROLOGUE|Prologue|CONCLUSION|Conclusion|" +
+  // French, for originals read alongside their translation.
+  "CHAPITRE|Chapitre|LETTRE|Lettre|PARTIE|Partie|ÉPILOGUE|Épilogue|PROLOGUE|Prologue";
 
 function unitMarks(text) {
   // A number is required when a title follows on the same line — that is what
   // keeps ordinary prose beginning "Part of the crew…" from matching.
   const re = new RegExp(
-    `^[ \\t]*(${UNITS})[ \\t]+([IVXLCDM]+|\\d{1,3})[ \\t]*[.:—–-]?[ \\t]*([^\\n]{0,70})$`,
+    `^[ \\t]*(${UNITS})[ \\t]+([IVXLCDM]+|\\d{1,3}|PREMIER|Premier|PREMIÈRE|Première)[ \\t]*[.:—–-]?[ \\t]*([^\\n]{0,70})$`,
     "gm",
   );
   const out = [];
@@ -80,7 +91,7 @@ function unitMarks(text) {
  * strategy wins, since a book numbering its chapters still names these.
  */
 function namedSectionMarks(text) {
-  const re = /^[ \t]*(EPILOGUE|Epilogue|PROLOGUE|Prologue|PREFACE|Preface|CONCLUSION|Conclusion)[ \t]*\.?[ \t]*$/gm;
+  const re = /^[ \t]*(EPILOGUE|Epilogue|PROLOGUE|Prologue|PREFACE|Preface|CONCLUSION|Conclusion|ÉPILOGUE|Épilogue|PRÉFACE|Préface|AVANT-PROPOS|Avant-propos)[ \t]*\.?[ \t]*$/gm;
   const out = [];
   let m;
   while ((m = re.exec(text)) !== null) {
@@ -95,7 +106,7 @@ function namedSectionMarks(text) {
 }
 
 /** Headings that are a bare roman numeral or number on their own line. */
-function bareNumberMarks(text) {
+function bareNumberMarks(text, unitLabel = "Chapter") {
   const re = /^[ \t]*([IVXLCDM]+|\d{1,3})[ \t]*\.?[ \t]*$/gm;
   const out = [];
   let m;
@@ -103,16 +114,66 @@ function bareNumberMarks(text) {
     out.push({
       at: m.index,
       end: m.index + m[0].length,
-      unit: "Chapter",
+      unit: unitLabel,
       num: toNumber(m[1]),
     });
   }
   return out;
 }
 
+/**
+ * Headings that are a numeral and a title on one line, with no unit word:
+ * "I. Le fantôme de Richelieu". Standard in French editions, which often print
+ * no "CHAPITRE" at all.
+ *
+ * Off by default. In English the roman numeral I is also a word, so a wrapped
+ * line reading "I. said nothing" would match, and every English text in the
+ * catalogue has already been split without it. The numbers must climb — a lone
+ * false positive cannot then drag a whole book apart.
+ */
+function numberedTitleMarks(text, unitLabel = "Chapter") {
+  const re = /^[ \t]*([IVXLCDM]+|\d{1,3})[.:—–-][ \t]+(\p{Lu}[^\n]{2,70})$/gmu;
+  const out = [];
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    out.push({
+      at: m.index,
+      end: m.index + m[0].length,
+      unit: unitLabel,
+      num: toNumber(m[1]),
+      inline: m[2].trim().replace(/\.$/, ""),
+    });
+  }
+  return out;
+}
+
+/**
+ * Keep the ascending run that ends the text, and nothing before it.
+ *
+ * A contents block is itself a perfectly ascending 1…n, so the numbering climbs
+ * twice over. Walking back from the end keeps the body and leaves the contents
+ * behind — where dropTableOfContents cannot help, since it compares headings
+ * without regard to position and keeps whichever came last, which for a chapter
+ * whose body heading did not match is the contents entry itself.
+ */
+function lastAscendingRun(marks) {
+  const out = [];
+  let floor = Infinity;
+  for (let i = marks.length - 1; i >= 0; i--) {
+    const mk = marks[i];
+    if (mk.num == null || mk.num < floor) {
+      out.push(mk);
+      if (mk.num != null) floor = mk.num;
+    }
+  }
+  return out.reverse();
+}
+
 /** All-caps lines used as section titles (Jekyll and Hyde does this). */
 function capsTitleMarks(text) {
-  const re = /^[ \t]*([A-Z][A-Z' .,’-]{6,68})[ \t]*$/gm;
+  // Accented capitals are included so French headings are not cut short at the
+  // first É or Ç and rejected for length.
+  const re = /^[ \t]*([A-ZÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸŒÆ][A-ZÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸŒÆ' .,’-]{6,68})[ \t]*$/gm;
   const out = [];
   let m;
   while ((m = re.exec(text)) !== null) {
@@ -138,7 +199,7 @@ export function toParagraphs(body) {
     .filter((p) => p.length > 0);
 }
 
-function build(text, marks) {
+function build(text, marks, opts = {}) {
   const chapters = [];
   let counter = 0;
 
@@ -157,7 +218,7 @@ function build(text, marks) {
         label = titleCase(mk.caps);
       else {
         counter += 1;
-        label = `Chapter ${counter}`;
+        label = `${opts.unitLabel ?? "Chapter"} ${counter}`;
         title = titleCase(mk.caps);
       }
     } else {
@@ -169,12 +230,13 @@ function build(text, marks) {
         // Otherwise a title may sit on the line after the heading.
         const lines = body.split("\n");
         const first = lines[0].trim();
-        if (
-          first &&
-          first.length < 70 &&
-          !/[.!?"”]$/.test(first) &&
-          lines[1]?.trim() === ""
-        ) {
+        // A trailing full stop normally means prose, not a heading — except in
+        // French editions, which punctuate their titles ("Marseille.--L'arrivée.").
+        // Left off by default so the English texts split exactly as before.
+        const endsLikeProse = opts.titleMayEndWithPeriod
+          ? /[!?"”]$/.test(first)
+          : /[.!?"”]$/.test(first);
+        if (first && first.length < 70 && !endsLikeProse && lines[1]?.trim() === "") {
           title = /^[A-Z' .,’-]+$/.test(first) ? titleCase(first) : first;
           body = lines.slice(1).join("\n").trim();
         }
@@ -197,7 +259,7 @@ const bodyLength = (c) => c.paragraphs.join(" ").length;
  *  - Title pages leave fragments ("BY", the author's name) as sections of
  *    their own. Drop anything with no real body.
  */
-function tidySections(chapters, strategy) {
+function tidySections(chapters, strategy, unitLabel = "Chapter") {
   const out = [];
 
   for (let i = 0; i < chapters.length; i++) {
@@ -236,7 +298,7 @@ function tidySections(chapters, strategy) {
         continue;
       }
       n += 1;
-      c.label = `Chapter ${n}`;
+      c.label = `${unitLabel} ${n}`;
     }
   }
 
@@ -271,23 +333,34 @@ function mergePlayActs(chapters) {
   return acts;
 }
 
-export function splitChapters(text, expect) {
+export function splitChapters(text, expect, opts = {}) {
   const named = dropTableOfContents(namedSectionMarks(text));
 
-  const candidates = [];
-  for (const [name, fn] of [
+  const strategies = [
     ["unit", unitMarks],
-    ["bare", bareNumberMarks],
+    ["bare", (t) => bareNumberMarks(t, opts.unitLabel)],
     ["caps", capsTitleMarks],
-  ]) {
-    const base = dropTableOfContents(fn(text));
+  ];
+  // Only offered where it has been asked for; see numberedTitleMarks.
+  if (opts.numberedTitles) {
+    strategies.push(["numbered", (t) => numberedTitleMarks(t, opts.unitLabel)]);
+  }
+
+  const candidates = [];
+  for (const [name, fn] of strategies) {
+    // The numbered strategy sheds its contents block by position rather than by
+    // heading text, so it skips dropTableOfContents entirely.
+    const base =
+      name === "numbered" ? lastAscendingRun(fn(text)) : dropTableOfContents(fn(text));
     // Fold in Epilogue/Prologue/Preface, skipping any the strategy already has.
     const extra = named.filter(
       (n) => !base.some((b) => Math.abs(b.at - n.at) < 4),
     );
     const marks = [...base, ...extra].sort((a, b) => a.at - b.at);
     if (marks.length < 2) continue;
-    const chapters = mergePlayActs(tidySections(build(text, marks), name));
+    const chapters = mergePlayActs(
+      tidySections(build(text, marks, opts), name, opts.unitLabel),
+    );
     if (chapters.length < 2) continue;
     const lengths = chapters
       .map((c) => c.paragraphs.join(" ").length)

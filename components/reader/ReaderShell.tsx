@@ -4,31 +4,49 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { buildParagraphs, type ChapterMeta } from "@/data/chapters";
 import type { Readable } from "@/data/library";
+import { BASE_LANG, languageLabel, type LangCode } from "@/lib/languages";
 import ShelfButtons from "../shelf/ShelfButtons";
 import { useShelf } from "../shelf/useShelf";
 import ChapterRail from "./ChapterRail";
 import { withEmphasis } from "./emphasis";
 import { themeOrder, themes } from "./themes";
+import { usePreferredLang } from "./useReaderLang";
 import { useReaderTheme } from "./useReaderTheme";
+
+type Source = {
+  gutenbergId: number;
+  url: string;
+  volumes: number[] | null;
+};
 
 export default function ReaderShell({
   item: book,
-  chapters,
+  chapters: initialChapters,
   initialParagraphs,
   isRealText,
-  source,
+  source: initialSource,
+  languages,
 }: {
   item: Readable;
   chapters: ChapterMeta[];
   initialParagraphs: string[];
   isRealText: boolean;
-  source: { gutenbergId: number; url: string } | null;
+  source: Source | null;
+  /** Every language this work has a text for; one entry means no switcher. */
+  languages: LangCode[];
 }) {
   const [themeKey, chooseTheme] = useReaderTheme();
+  const [preferredLang, setPreferredLang] = usePreferredLang();
   const { recordProgress } = useShelf();
   const [railOpen, setRailOpen] = useState(true);
   const [current, setCurrent] = useState(0);
   const [scrollFraction, setScrollFraction] = useState(0);
+
+  // The server always renders the base language; a stored preference for
+  // another one is applied after hydration, and only where it exists.
+  const [lang, setLang] = useState<LangCode>(BASE_LANG);
+  const [chapters, setChapters] = useState(initialChapters);
+  const [source, setSource] = useState(initialSource);
 
   const theme = themes[themeKey];
   const chapter = chapters[current];
@@ -117,7 +135,9 @@ export default function ReaderShell({
       }
 
       setLoading(true);
-      fetch(`/api/chapter?id=${encodeURIComponent(book.id)}&n=${index}`)
+      fetch(
+        `/api/chapter?id=${encodeURIComponent(book.id)}&n=${index}&lang=${lang}`,
+      )
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
         .then((data: { paragraphs: string[] }) => {
           if (token !== requestRef.current) return; // a later chapter won
@@ -130,8 +150,96 @@ export default function ReaderShell({
           setLoading(false);
         });
     },
-    [book.id, isRealText, percentAt, recordProgress],
+    [book.id, isRealText, lang, percentAt, recordProgress],
   );
+
+  /**
+   * Swap edition. The chapter list comes back with the prose because the two
+   * editions rarely divide alike — Dumas in French runs to different chapter
+   * counts than the Victorian translations — so the rail has to be rebuilt, and
+   * the server clamps the position to something that exists in the new one.
+   */
+  const switchLang = useCallback(
+    (next: LangCode) => {
+      if (next === lang || !languages.includes(next)) return;
+
+      const token = ++requestRef.current;
+      setLang(next);
+      setPreferredLang(next);
+      setLoading(true);
+
+      fetch(
+        `/api/edition?id=${encodeURIComponent(book.id)}&lang=${next}&n=${current}`,
+      )
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+        .then(
+          (data: {
+            chapters: ChapterMeta[];
+            index: number;
+            paragraphs: string[];
+            source: Source | null;
+          }) => {
+            if (token !== requestRef.current) return;
+            setChapters(data.chapters);
+            setCurrent(data.index);
+            setParagraphs(data.paragraphs);
+            setSource(data.source);
+            setLoading(false);
+            window.scrollTo({ top: 0, behavior: "auto" });
+          },
+        )
+        .catch(() => {
+          if (token !== requestRef.current) return;
+          // Leave the reader on the edition it already had rather than on a
+          // blank page.
+          setLang(lang);
+          setLoading(false);
+        });
+    },
+    [book.id, current, lang, languages, setPreferredLang],
+  );
+
+  /**
+   * Apply a language chosen while reading something else, once, on arrival.
+   *
+   * Deliberately not routed through switchLang: that sets state the moment it
+   * is called, which inside an effect means a second render before the fetch
+   * has even left. Here nothing changes until the edition is in hand, so the
+   * page renders English once and then swaps, rather than flickering through a
+   * loading state on every load.
+   */
+  const appliedPreference = useRef(false);
+  useEffect(() => {
+    if (appliedPreference.current) return;
+    // Nothing to do — and importantly, no latching either. On the hydration
+    // render the stored preference is not readable yet (the store hands back
+    // the server's value), so claiming it had been applied here would settle
+    // for English one render before the real answer arrives.
+    if (preferredLang === lang || !languages.includes(preferredLang)) return;
+    appliedPreference.current = true;
+
+    const token = ++requestRef.current;
+    fetch(`/api/edition?id=${encodeURIComponent(book.id)}&lang=${preferredLang}&n=0`)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then(
+        (data: {
+          chapters: ChapterMeta[];
+          index: number;
+          paragraphs: string[];
+          source: Source | null;
+        }) => {
+          if (token !== requestRef.current) return;
+          setLang(preferredLang);
+          setChapters(data.chapters);
+          setCurrent(data.index);
+          setParagraphs(data.paragraphs);
+          setSource(data.source);
+        },
+      )
+      .catch(() => {
+        // Stay on the English text already rendered.
+      });
+  }, [book.id, lang, languages, preferredLang]);
 
   return (
     <div
@@ -166,17 +274,53 @@ export default function ReaderShell({
           ← Catalog
         </Link>
 
-        <h1 className="mx-auto truncate text-sm sm:text-base">
-          <span className="font-semibold">{book.title}</span>
-          <span style={{ color: theme.muted }}> — </span>
-          <Link
-            href={`/author/${book.authorId}`}
-            className="underline-offset-2 hover:underline"
-            style={{ color: theme.muted }}
-          >
-            {book.author}
-          </Link>
-        </h1>
+        <div className="mx-auto flex min-w-0 items-center gap-3">
+          <h1 className="truncate text-sm sm:text-base">
+            <span className="font-semibold">{book.title}</span>
+            <span style={{ color: theme.muted }}> — </span>
+            <Link
+              href={`/author/${book.authorId}`}
+              className="underline-offset-2 hover:underline"
+              style={{ color: theme.muted }}
+            >
+              {book.author}
+            </Link>
+          </h1>
+
+          {/* Only worth showing where there is something to switch to. */}
+          {languages.length > 1 && (
+            <div
+              className="flex shrink-0 items-center overflow-hidden rounded-md border"
+              style={{ borderColor: theme.rule }}
+              role="radiogroup"
+              aria-label="Reading language"
+            >
+              {languages.map((code) => {
+                const meta = languageLabel(code);
+                const on = code === lang;
+                return (
+                  <button
+                    key={code}
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    aria-label={`Read in ${meta.label}`}
+                    title={meta.endonym}
+                    disabled={loading}
+                    onClick={() => switchLang(code)}
+                    className="px-2 py-1 text-[11px] tracking-wide transition disabled:opacity-50"
+                    style={{
+                      backgroundColor: on ? theme.accent : "transparent",
+                      color: on ? theme.bg : theme.muted,
+                    }}
+                  >
+                    {meta.short}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
         <ShelfButtons id={book.id} className="mr-1" />
 
@@ -249,15 +393,22 @@ export default function ReaderShell({
 
           {source && (
             <p className="mt-10 text-xs" style={{ color: theme.muted }}>
+              {languages.length > 1 && `${languageLabel(lang).endonym} · `}
               Text from{" "}
-              <a
-                href={`https://www.gutenberg.org/ebooks/${source.gutenbergId}`}
-                className="underline underline-offset-2"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Project Gutenberg #{source.gutenbergId}
-              </a>{" "}
+              {/* Editions assembled from several volumes credit each one. */}
+              {(source.volumes ?? [source.gutenbergId]).map((gid, i, all) => (
+                <span key={gid}>
+                  <a
+                    href={`https://www.gutenberg.org/ebooks/${gid}`}
+                    className="underline underline-offset-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Project Gutenberg #{gid}
+                  </a>
+                  {i < all.length - 1 ? ", " : ""}
+                </span>
+              ))}{" "}
               · public domain
             </p>
           )}

@@ -1,0 +1,44 @@
+[
+ {
+  "id": "alexandre-dumas--the-count-of-monte-cristo",
+  "lang": "fr",
+  "title": "Le comte de Monte-Cristo",
+  "gutenbergIds": [17989, 17990, 17991, 17992]
+ },
+ {
+  "id": "alexandre-dumas--the-three-musketeers",
+  "lang": "fr",
+  "title": "Les trois mousquetaires",
+  "gutenbergId": 13951
+ },
+ {
+  "id": "alexandre-dumas--twenty-years-after",
+  "lang": "fr",
+  "title": "Vingt ans après",
+  "gutenbergId": 13952
+ },
+ {
+  "id": "alexandre-dumas--the-black-tulip",
+  "lang": "fr",
+  "title": "La tulipe noire",
+  "gutenbergId": 26504
+ },
+ {
+  "id": "alexandre-dumas--marguerite-de-valois",
+  "lang": "fr",
+  "title": "La reine Margot",
+  "gutenbergIds": [13856, 13857]
+ },
+ {
+  "id": "alexandre-dumas--the-companions-of-jehu",
+  "lang": "fr",
+  "title": "Les compagnons de Jéhu",
+  "gutenbergId": 13819
+ },
+ {
+  "id": "alexandre-dumas--the-conspirators",
+  "lang": "fr",
+  "title": "Le chevalier d'Harmental",
+  "gutenbergId": 18028
+ }
+]
