@@ -39,6 +39,7 @@ export default function ReaderShell({
   const [preferredLang, setPreferredLang] = usePreferredLang();
   const { recordProgress } = useShelf();
   const [railOpen, setRailOpen] = useState(true);
+  const [barOpen, setBarOpen] = useState(true);
   const [current, setCurrent] = useState(0);
   const [scrollFraction, setScrollFraction] = useState(0);
 
@@ -246,7 +247,29 @@ export default function ReaderShell({
       className="min-h-screen"
       style={{ backgroundColor: theme.bg, color: theme.text }}
     >
+      {/* The only way back once the bar is hidden. It has to sit outside the
+          header and stay mounted, or hiding the bar while the chapter rail is
+          also hidden would leave the reader with no controls at all. */}
+      {!barOpen && (
+        <button
+          type="button"
+          onClick={() => setBarOpen(true)}
+          aria-label="Show toolbar"
+          aria-expanded={false}
+          title="Show toolbar"
+          className="fixed right-3 top-3 z-50 grid h-8 w-8 place-items-center rounded-md border text-xs opacity-40 transition hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:opacity-100"
+          style={{
+            borderColor: theme.rule,
+            color: theme.muted,
+            backgroundColor: `color-mix(in srgb, ${theme.bg} 80%, transparent)`,
+          }}
+        >
+          ⌄
+        </button>
+      )}
+
       {/* ---- header: title — author, and the three reading themes ---- */}
+      {barOpen && (
       <header
         className="fixed inset-x-0 top-0 z-40 flex h-16 items-center gap-4 border-b px-4 backdrop-blur-sm"
         style={{
@@ -347,12 +370,26 @@ export default function ReaderShell({
             />
           ))}
         </div>
+
+        <button
+          type="button"
+          onClick={() => setBarOpen(false)}
+          aria-label="Hide toolbar"
+          aria-expanded={true}
+          title="Hide toolbar"
+          className="grid h-7 w-7 shrink-0 place-items-center rounded-md text-xs opacity-70 transition hover:opacity-100 focus:outline-none focus-visible:ring-2"
+          style={{ color: theme.muted }}
+        >
+          ⌃
+        </button>
       </header>
+      )}
 
       <ChapterRail
         chapters={chapters}
         current={current}
         open={railOpen}
+        barOpen={barOpen}
         theme={theme}
         onSelect={goToChapter}
         onClose={() => setRailOpen(false)}
@@ -360,9 +397,17 @@ export default function ReaderShell({
 
       {/* ---- the page itself ---- */}
       <main
-        className={`pr-6 pb-24 pt-28 transition-[padding] ${
+        // Only the left gap is animated. `transition-[padding]` covered every
+        // edge, and with the top gap in the same shorthand the text would not
+        // move up when the toolbar was hidden — it sat at the header's offset
+        // with nothing above it.
+        className={`pr-6 pb-24 transition-[padding-left] ${
           railOpen ? "pl-22" : "pl-6"
         }`}
+        // Inline rather than a utility class: the gap has to clear the fixed
+        // header when it is showing and only the floating reveal button when it
+        // is not, and this file already sets everything theme-dependent inline.
+        style={{ paddingTop: barOpen ? "7rem" : "3.5rem" }}
       >
         <article className="mx-auto max-w-[68ch]">
           {/* Only show the numbered label separately when there is a real

@@ -7,6 +7,7 @@ export default function ChapterRail({
   chapters,
   current,
   open,
+  barOpen,
   theme,
   onSelect,
   onClose,
@@ -14,6 +15,8 @@ export default function ChapterRail({
   chapters: ChapterMeta[];
   current: number;
   open: boolean;
+  /** Whether the toolbar is showing, so the rail knows where the page starts. */
+  barOpen: boolean;
   theme: ReaderTheme;
   onSelect: (index: number) => void;
   onClose: () => void;
@@ -27,7 +30,9 @@ export default function ChapterRail({
   return (
     <nav
       aria-label="Chapters"
-      className="fixed left-0 top-16 bottom-8 z-30 flex w-16 flex-col items-center gap-2 overflow-y-auto border-r py-4"
+      className={`fixed left-0 bottom-8 z-30 flex w-16 flex-col items-center gap-2 overflow-y-auto border-r py-4 ${
+        barOpen ? "top-16" : "top-0"
+      }`}
       style={{ borderColor: theme.rule, backgroundColor: theme.bg }}
     >
       {chapters.map((chapter, i) => {
