@@ -192,6 +192,38 @@ function dropTableOfContents(marks) {
   return marks.filter((mk) => lastAt.get(key(mk)) === mk.at);
 }
 
+/**
+ * Drop Gutenberg's producer credit and the title block beneath it.
+ *
+ * A work that splits into chapters loses this already — the front matter falls
+ * outside the first heading, and tidySections discards it. A single unbroken
+ * text has no headings to fall outside of, so without this the reader opens
+ * "Clarimonde" and is met with "Produced by David Widger".
+ *
+ * The credit at the very top is the trigger, so a text that does not carry one
+ * is returned untouched. Only short blocks that are not sentences go: a title,
+ * a byline, a translator, a year.
+ */
+export function stripFrontMatter(text) {
+  if (!/^\s*(Produced by|E-?text prepared by|Transcribed from)/i.test(text)) {
+    return text;
+  }
+  const blocks = text.split(/\n[ \t]*\n+/);
+  let i = 0;
+  while (i < blocks.length && i < 8) {
+    const b = blocks[i].trim();
+    if (b === "") {
+      i++;
+      continue;
+    }
+    const credit = /^(Produced by|E-?text prepared by|Transcribed from)/i.test(b);
+    const headingish = b.length <= 80 && !/[.!?]["'”’]?$/.test(b);
+    if (!credit && !headingish) break;
+    i++;
+  }
+  return blocks.slice(i).join("\n\n").trim();
+}
+
 export function toParagraphs(body) {
   return body
     .split(/\n[ \t]*\n+/)

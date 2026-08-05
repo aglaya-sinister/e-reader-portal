@@ -4,7 +4,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { fold, splitChapters, stripBoilerplate, toParagraphs } from "./split.mjs";
+import { fold, splitChapters, stripBoilerplate, stripFrontMatter, toParagraphs } from "./split.mjs";
 
 const OUT = path.resolve(import.meta.dirname, "..", "content", "texts");
 const UA = "book-catalog-dev/0.1 (local demo)";
@@ -202,7 +202,7 @@ for (const entry of jobs) {
 
     let chapters = picked
       ? picked.chapters
-      : [{ label: "Text", paragraphs: toParagraphs(text) }];
+      : [{ label: "Text", paragraphs: toParagraphs(stripFrontMatter(text)) }];
 
     // Some Gutenberg volumes carry a second, unrelated piece after the work —
     // "The Works of…, Volume 5" bundles a novel with a travel essay. A slice
