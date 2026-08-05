@@ -488,5 +488,75 @@
   "id": "alexandre-dumas--the-cenci",
   "title": "The Cenci",
   "author": "Alexandre Dumas"
+ },
+ {
+  "id": "theophile-gautier--mademoiselle-de-maupin",
+  "title": "Mademoiselle de Maupin",
+  "author": "Théophile Gautier",
+  "gutenbergIds": [
+   48893,
+   48894
+  ]
+ },
+ {
+  "id": "theophile-gautier--captain-fracasse",
+  "title": "Captain Fracasse",
+  "author": "Théophile Gautier",
+  "gutenbergId": 1235
+ },
+ {
+  "id": "theophile-gautier--the-romance-of-a-mummy",
+  "title": "The Romance of a Mummy",
+  "author": "Théophile Gautier",
+  "gutenbergId": 27724,
+  "stopAt": "_Egypt_"
+ },
+ {
+  "id": "theophile-gautier--wanderings-in-spain",
+  "title": "Wanderings in Spain",
+  "author": "Théophile Gautier",
+  "gutenbergId": 52763
+ },
+ {
+  "id": "theophile-gautier--enamels-and-cameos",
+  "title": "Enamels and Cameos",
+  "author": "Théophile Gautier",
+  "gutenbergId": 29521
+ },
+ {
+  "id": "theophile-gautier--charles-baudelaire-his-life",
+  "title": "Charles Baudelaire, His Life",
+  "author": "Théophile Gautier",
+  "gutenbergId": 47075
+ },
+ {
+  "id": "theophile-gautier--honore-de-balzac",
+  "title": "Honoré de Balzac",
+  "author": "Théophile Gautier",
+  "gutenbergId": 53398
+ },
+ {
+  "id": "theophile-gautier--my-private-menagerie",
+  "title": "My Private Menagerie",
+  "author": "Théophile Gautier",
+  "gutenbergId": 30760
+ },
+ {
+  "id": "theophile-gautier--clarimonde",
+  "title": "Clarimonde",
+  "author": "Théophile Gautier",
+  "gutenbergId": 22661
+ },
+ {
+  "id": "theophile-gautier--king-candaules",
+  "title": "King Candaules",
+  "author": "Théophile Gautier",
+  "gutenbergId": 22660
+ },
+ {
+  "id": "theophile-gautier--the-mummys-foot",
+  "title": "The Mummy's Foot",
+  "author": "Théophile Gautier",
+  "gutenbergId": 22662
  }
 ]

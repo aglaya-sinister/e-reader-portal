@@ -79,10 +79,32 @@ async function fetchText(gid) {
   return null;
 }
 
+/**
+ * Drop everything from `marker` onward, for the Gutenberg volumes that carry a
+ * second piece after the work — #27724 is a novel followed by a travel essay,
+ * and without this the novel's closing chapter runs to sixty thousand
+ * characters of unrelated Egypt. Matched as a line of its own and only in the
+ * back half, so the word appearing in the prose is harmless.
+ */
+function cutAt(text, marker) {
+  if (!marker) return text;
+  const re = new RegExp(`^[ \\t]*${marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[ \\t]*$`, "m");
+  const m = text.match(re);
+  if (!m || m.index < text.length * 0.5) return text;
+  return text.slice(0, m.index).trimEnd();
+}
+
 const manifest = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
+
+// Optional second argument narrows the run to ids starting with it, so one
+// author can be re-fetched without touching the other ninety works.
+const only = process.argv[3];
+const jobs = only ? manifest.filter((e) => e.id.startsWith(only)) : manifest;
+if (only) console.error(`filtered to ${jobs.length} works matching "${only}"`);
+
 const report = [];
 
-for (const entry of manifest) {
+for (const entry of jobs) {
   const { id, title, author, expect } = entry;
   await sleep(250);
   process.stderr.write(`… ${id}\n`); // progress, since the report prints at the end
@@ -93,6 +115,55 @@ for (const entry of manifest) {
 
     let gid = entry.gutenbergId;
     let got = null;
+
+    // A work published only in volumes is joined in order. Each is split on its
+    // own — one split across the join reads the second title page as prose.
+    if (entry.gutenbergIds) {
+      const volumes = [];
+      for (const g of entry.gutenbergIds) {
+        await sleep(400);
+        const part = await fetchText(g);
+        if (!part || stripBoilerplate(part.text).length < MIN_CHARS) {
+          volumes.length = 0;
+          break;
+        }
+        volumes.push({ gid: g, url: part.url, body: stripBoilerplate(part.text) });
+      }
+      if (volumes.length === 0) {
+        report.push({ id, status: "NO USABLE TEXT", gid: entry.gutenbergIds[0] });
+        continue;
+      }
+
+      let chapters = volumes.flatMap((v) => {
+        const picked = splitChapters(v.body);
+        return picked ? picked.chapters : [{ label: title, paragraphs: toParagraphs(v.body) }];
+      });
+
+      if (entry.slice) chapters = chapters.slice(entry.slice.from, entry.slice.from + entry.slice.count);
+      // Volumes restart at one, so the rail would read 1,2,3…,1,2,3…
+      chapters = chapters.map((c, i) => ({ ...c, label: `Chapter ${i + 1}` }));
+
+      const words = chapters.reduce((n, c) => n + c.paragraphs.join(" ").split(/\s+/).length, 0);
+      fs.writeFileSync(
+        path.join(OUT, `${id}.json`),
+        JSON.stringify({
+          id,
+          gutenbergId: volumes[0].gid,
+          source: volumes[0].url,
+          sources: volumes.map((v) => ({ gutenbergId: v.gid, url: v.url })),
+          chapters,
+        }),
+      );
+      report.push({
+        id,
+        status: expect && chapters.length !== expect ? "MISMATCH (joined)" : "OK (joined)",
+        gid: volumes[0].gid,
+        chapters: chapters.length,
+        expect,
+        words,
+      });
+      continue;
+    }
 
     if (gid) {
       got = await fetchText(gid);
@@ -126,12 +197,21 @@ for (const entry of manifest) {
       continue;
     }
 
-    const text = stripBoilerplate(got.text);
+    const text = cutAt(stripBoilerplate(got.text), entry.stopAt);
     const picked = splitChapters(text, expect);
 
-    const chapters = picked
+    let chapters = picked
       ? picked.chapters
       : [{ label: "Text", paragraphs: toParagraphs(text) }];
+
+    // Some Gutenberg volumes carry a second, unrelated piece after the work —
+    // "The Works of…, Volume 5" bundles a novel with a travel essay. A slice
+    // keeps only the work this entry is for.
+    if (entry.slice) {
+      chapters = chapters
+        .slice(entry.slice.from, entry.slice.from + entry.slice.count)
+        .map((c, i) => ({ ...c, label: `Chapter ${i + 1}` }));
+    }
 
     const words = chapters.reduce(
       (n, c) => n + c.paragraphs.join(" ").split(/\s+/).length,

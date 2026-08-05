@@ -15,13 +15,19 @@ const targets = [
   ["charlotte-bronte", "Charlotte Bronte George Richmond portrait"],
   ["joseph-conrad", "Joseph Conrad portrait photograph"],
   ["emily-bronte", "Emily Bronte Branwell Bronte portrait"],
+  ["theophile-gautier", "Theophile Gautier Nadar portrait photograph"],
 ];
+
+// These are committed and chosen by hand, so re-running the lot would replace
+// settled pictures. An id argument fetches just the one that is new.
+const only = process.argv[2];
+const wanted = only ? targets.filter(([id]) => id === only) : targets;
 
 const EXCLUDE = /signature|grave|plaque|house|stamp|book|cover|memorial|statue|museum exterior|logo/i;
 
 await mkdir(OUT, { recursive: true });
 
-for (const [id, q] of targets) {
+for (const [id, q] of wanted) {
   await sleep(1600);
   const url =
     "https://commons.wikimedia.org/w/api.php?action=query&generator=search" +

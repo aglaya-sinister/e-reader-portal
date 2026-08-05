@@ -28,6 +28,23 @@ export type AuthorWork = {
   chapterUnit?: string;
   /** Genres, from the same vocabulary the catalog books use. */
   genres?: string[];
+  /**
+   * Pin the Gutenberg edition instead of letting the ingest search for it.
+   * Needed wherever a title search is unreliable — a French author's work is
+   * catalogued under its English title by one translator and not another — and
+   * wherever the English text exists only as separate volumes, which go in
+   * `gutenbergIds` and are joined in order.
+   */
+  gutenbergId?: number;
+  gutenbergIds?: number[];
+  /** Take only part of the joined text: `[fromChapter, count]`, 0-based. */
+  slice?: [number, number];
+  /**
+   * Cut the source at this heading, for volumes that bundle a second piece
+   * after the work — "The Romance of a Mummy *and Egypt*". Matched as a line of
+   * its own, and only in the back half, so a mention in the prose is safe.
+   */
+  stopAt?: string;
 };
 
 export type Author = {
@@ -320,6 +337,32 @@ export const authors: Author[] = [
       { title: "The Countess of Saint-Géran", year: "1839", note: "A child stolen at birth and a lawsuit that ran for twenty years.", hue: 108, genres: ["Non-fiction", "Historical", "Mystery"] },
       { title: "Murat", year: "1839", note: "Napoleon's cavalryman turned King of Naples, and the firing squad that closed the account.", hue: 6, genres: ["Non-fiction", "Historical", "Tragedy"] },
       { title: "The Cenci", year: "1839", note: "A Roman family, a monstrous father, and the parricide Shelley also took up.", hue: 264, genres: ["Non-fiction", "Historical", "Tragedy"] },
+    ],
+  },
+  {
+    id: "theophile-gautier",
+    name: "Théophile Gautier",
+    lived: "1811–1872",
+    nationality: "French",
+    style: "He writes to be looked at. A room, a costume, a face is built up detail by detail until the description carries what the plot never states outright, and surfaces get the attention other novelists reserve for motive — which was the argument, pressed all his life, that a thing well made requires no further excuse. The fantastic then arrives inside that solidity and behaves as though it belongs there: a foot bought in a curiosity shop, a painted woman who steps down, a dead girl who keeps her appointments. The sentences are long, balanced and unhurried, and the irony is laid on so lightly that readers still disagree about where he is serious.",
+    portrait: {
+      src: "/authors/theophile-gautier.jpg",
+      credit: "Nadar, c. 1856",
+    },
+    works: [
+      { title: "Mademoiselle de Maupin", year: "1835", note: "A man, his mistress and the beautiful youth they both fall for, who is neither. The preface picked the fight over art and morality that Gautier spent his life continuing.", hue: 320, genres: ["Romance", "Philosophical"], chapters: 18, gutenbergIds: [48893, 48894] },
+      { title: "Captain Fracasse", year: "1863", note: "An impoverished baron leaves his ruined castle with a troupe of strolling players and takes a stage name to fight under.", hue: 30, genres: ["Adventure", "Historical", "Romance"], chapters: 22, gutenbergId: 1235 },
+      { title: "The Romance of a Mummy", year: "1858", note: "An English lord opens an intact tomb in the Valley of Kings, and the papyrus inside tells the story of the woman he has just unwrapped.", hue: 46, genres: ["Historical", "Gothic", "Romance"], chapters: 19, gutenbergId: 27724, stopAt: "_Egypt_" },
+      { title: "Wanderings in Spain", year: "1843", note: "Six months of travel written up without a guidebook's manners — bullfights, bad roads, the Alhambra, and a great deal of looking.", hue: 14, genres: ["Travel", "Non-fiction"], chapters: 16, gutenbergId: 52763 },
+      { title: "Enamels and Cameos", year: "1852", note: "Short, hard, highly finished poems, revised across twenty years. The book that taught the Parnassians what they wanted to be.", hue: 190, genres: ["Poetry"], chapters: 50, gutenbergId: 29521 },
+      { title: "Charles Baudelaire, His Life", year: "1868", note: "Written as the preface to his dead friend's collected works, by the man Baudelaire had dedicated Les Fleurs du mal to.", hue: 252, genres: ["Non-fiction"], chapters: 26, gutenbergId: 47075 },
+      { title: "Honoré de Balzac", year: "1859", note: "A working novelist on another one: the debts, the coffee, the revisions carried through twelve sets of proofs.", hue: 96, genres: ["Non-fiction"], chapters: 6, gutenbergId: 53398 },
+      { title: "My Private Menagerie", year: "1869", note: "The cats, dogs, horses, lizards and magpies he lived among, described with the same care he gave to Spanish cathedrals.", hue: 140, genres: ["Non-fiction"], chapters: 5, gutenbergId: 30760 },
+    ],
+    stories: [
+      { title: "Clarimonde", year: "1836", note: "A young priest is called to the deathbed of a famous courtesan and spends the rest of his life living two of them, one by night.", hue: 350, genres: ["Gothic", "Horror", "Romance"], gutenbergId: 22661 },
+      { title: "King Candaules", year: "1844", note: "A king so proud of his wife's beauty that he shows her to his captain, and is answered exactly as Herodotus reports.", hue: 210, genres: ["Historical", "Tragedy"], chapters: 5, gutenbergId: 22660 },
+      { title: "The Mummy's Foot", year: "1840", note: "A curiosity-shop paperweight turns out to belong to a princess who would like it back.", hue: 66, genres: ["Fable", "Ghost Story"], gutenbergId: 22662 },
     ],
   },
 ];

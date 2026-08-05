@@ -1,0 +1,38 @@
+[
+ {
+  "id": "theophile-gautier--mademoiselle-de-maupin",
+  "lang": "fr",
+  "title": "Mademoiselle de Maupin",
+  "gutenbergId": 14288
+ },
+ {
+  "id": "theophile-gautier--captain-fracasse",
+  "lang": "fr",
+  "title": "Le capitaine Fracasse",
+  "gutenbergId": 60746
+ },
+ {
+  "id": "theophile-gautier--wanderings-in-spain",
+  "lang": "fr",
+  "title": "Voyage en Espagne",
+  "gutenbergId": 33157
+ },
+ {
+  "id": "theophile-gautier--enamels-and-cameos",
+  "lang": "fr",
+  "title": "Émaux et Camées",
+  "gutenbergId": 37733
+ },
+ {
+  "id": "theophile-gautier--honore-de-balzac",
+  "lang": "fr",
+  "title": "Honoré de Balzac",
+  "gutenbergId": 53399
+ },
+ {
+  "id": "theophile-gautier--my-private-menagerie",
+  "lang": "fr",
+  "title": "Ménagerie intime",
+  "gutenbergId": 22551
+ }
+]
