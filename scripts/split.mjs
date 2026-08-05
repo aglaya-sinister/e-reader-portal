@@ -210,7 +210,12 @@ export function stripFrontMatter(text) {
   }
   const blocks = text.split(/\n[ \t]*\n+/);
   let i = 0;
-  while (i < blocks.length && i < 8) {
+  // What actually ends the walk is the first block that reads as a sentence;
+  // the count is only a backstop. It allows twelve because the Celebrated
+  // Crimes volumes run to nine before the prose starts — credit, title, "By",
+  // author, series note, year, CONTENTS, the one contents entry, and then the
+  // same title again as the body's own heading.
+  while (i < blocks.length && i < 12) {
     const b = blocks[i].trim();
     if (b === "") {
       i++;
