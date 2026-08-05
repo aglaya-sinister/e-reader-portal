@@ -19,7 +19,18 @@ const UA = "book-catalog-dev/0.1 (local demo)";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 fs.mkdirSync(OUT, { recursive: true });
 
+// Several works are cut from the same joined source (all four Bragelonne
+// volumes back a quartet of English titles), so each volume is downloaded once.
+const downloads = new Map();
+
 async function fetchText(gid) {
+  if (downloads.has(gid)) return downloads.get(gid);
+  const result = await download(gid);
+  downloads.set(gid, result);
+  return result;
+}
+
+async function download(gid) {
   for (const url of [
     `https://www.gutenberg.org/cache/epub/${gid}/pg${gid}.txt`,
     `https://www.gutenberg.org/files/${gid}/${gid}-0.txt`,
@@ -134,9 +145,34 @@ for (const entry of manifest) {
       );
     }
 
-    // Volumes restart their numbering at one, so a joined work has to be
-    // relabelled or the rail reads 1,2,3…,1,2,3…
-    if (volumes.length > 1) {
+    /**
+     * Take this work's share of the joined text.
+     *
+     * The English catalogue publishes Le Vicomte de Bragelonne as four titles,
+     * and the French volumes divide in different places, so the boundaries are
+     * given here as chapter offsets into the joined novel. They were fixed by
+     * matching the opening sentence of each English work against the French —
+     * not guessed from the volume breaks, which do not line up. Note the
+     * English titles overlap: two of them start from chapter one.
+     */
+    if (entry.slice) {
+      const { from, count } = entry.slice;
+      if (from + count > chapters.length) {
+        report.push({
+          id,
+          lang,
+          status: `SLICE OVERRUN (${chapters.length} ch)`,
+          chapters: chapters.length,
+        });
+        continue;
+      }
+      chapters = chapters.slice(from, from + count);
+    }
+
+    // Volumes restart their numbering at one, and a slice starts partway
+    // through, so either way the labels have to be redone or the rail reads
+    // 1,2,3…,1,2,3… — or starts at 140.
+    if (volumes.length > 1 || entry.slice) {
       let n = 0;
       chapters = chapters.map((c) => {
         n += 1;

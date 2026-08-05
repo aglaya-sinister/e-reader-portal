@@ -40,5 +40,35 @@
   "lang": "fr",
   "title": "Le chevalier d'Harmental",
   "gutenbergId": 18028
+ },
+
+ {
+  "_comment": "Le vicomte de Bragelonne is one French novel of 268 chapters that the English catalogue publishes as four overlapping titles. Offsets below were fixed by matching each English work's opening sentence to the French, since the volume breaks do not line up.",
+  "id": "alexandre-dumas--the-vicomte-de-bragelonne",
+  "lang": "fr",
+  "title": "Le vicomte de Bragelonne",
+  "gutenbergIds": [13947, 13948, 13949, 13950],
+  "slice": { "from": 0, "count": 75 }
+ },
+ {
+  "id": "alexandre-dumas--ten-years-later",
+  "lang": "fr",
+  "title": "Le vicomte de Bragelonne",
+  "gutenbergIds": [13947, 13948, 13949, 13950],
+  "slice": { "from": 0, "count": 104 }
+ },
+ {
+  "id": "alexandre-dumas--louise-de-la-valliere",
+  "lang": "fr",
+  "title": "Le vicomte de Bragelonne",
+  "gutenbergIds": [13947, 13948, 13949, 13950],
+  "slice": { "from": 139, "count": 67 }
+ },
+ {
+  "id": "alexandre-dumas--the-man-in-the-iron-mask",
+  "lang": "fr",
+  "title": "Le vicomte de Bragelonne",
+  "gutenbergIds": [13947, 13948, 13949, 13950],
+  "slice": { "from": 206, "count": 62 }
  }
 ]

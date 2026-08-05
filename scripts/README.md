@@ -32,6 +32,20 @@ far too loosely. Where a work was only ever published in volumes, list them all
 in `gutenbergIds` and they are joined into one book with chapters renumbered
 from one.
 
+A `slice` takes one work's share of a joined text:
+
+```json
+{ "id": "…--louise-de-la-valliere", "gutenbergIds": [13947, 13948, 13949, 13950],
+  "slice": { "from": 139, "count": 67 } }
+```
+
+*Le vicomte de Bragelonne* is a single French novel of 268 chapters that the
+English catalogue publishes as four titles, two of which start from chapter
+one and so overlap. The French volume breaks fall in different places, so the
+offsets were fixed by matching each English work's **opening sentence** against
+the French text, not inferred from the volumes. Re-derive them the same way if
+the edition ever changes; the volume boundaries are not a shortcut.
+
 It also turns on two splitting behaviours the English texts do not use, so
 their existing output cannot shift:
 
